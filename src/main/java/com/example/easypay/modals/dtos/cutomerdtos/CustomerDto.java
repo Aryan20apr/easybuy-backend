@@ -1,4 +1,4 @@
-package com.example.easypay.modals.dtos;
+package com.example.easypay.modals.dtos.cutomerdtos;
 
 import com.example.easypay.modals.entities.Address;
 import com.example.easypay.modals.entities.CustomerRole;

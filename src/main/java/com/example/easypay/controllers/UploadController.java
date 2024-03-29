@@ -1,7 +1,7 @@
 package com.example.easypay.controllers;
 
 
-import com.example.easypay.modals.dtos.ApiResponse;
+import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.services.UploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,12 +25,12 @@ public class UploadController {
     }
 
     @PostMapping("/images")
-    public ResponseEntity<ApiResponse> uploadImages( @RequestPart("images") MultipartFile[] images) {
+    public ResponseEntity<ApiResponse<ArrayList<String>>> uploadImages( @RequestPart("images") MultipartFile[] images) {
 
         ArrayList<String> urls= uploadService.uploadImages(images);
         log.info("File received: "+images.length);
         log.info("File upload url: "+urls);
-        ApiResponse apiResponse=ApiResponse.builder().url(urls).status(true).build();
+        ApiResponse<ArrayList<String>> apiResponse=ApiResponse.<ArrayList<String>>builder().data(urls).message("All images uploaded successfully").build();
 
         return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
     }
