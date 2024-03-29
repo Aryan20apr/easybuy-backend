@@ -2,6 +2,7 @@ package com.example.easypay.controllers;
 
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
+import com.example.easypay.modals.dtos.shared.LoginRequestDto;
 import com.example.easypay.services.interfaces.CustomerService;
 import com.example.easypay.services.serviceimpl.CustomerServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,10 @@ public class CustomerController {
 @PostMapping("/register")
    public ResponseEntity<ApiResponse<String>> registerUser(@RequestBody CustomerDto customerDto)
     {
-        return new ResponseEntity<>(new ApiResponse<String>(), HttpStatus.CREATED);
+        String customerToken=customerService.register(customerDto);
+        return new ResponseEntity<>(new ApiResponse<String>(customerToken), HttpStatus.CREATED);
     }
-   public ResponseEntity<ApiResponse> loginUser(@RequestBody CustomerDto customerDto)
+   public ResponseEntity<ApiResponse> loginUser(@RequestBody LoginRequestDto customerDto)
     {
         return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
     }

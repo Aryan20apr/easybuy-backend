@@ -24,9 +24,12 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private UUID customerId;
+    private Long customerId;
+
+    @Column(name = "customer_token", nullable = false, unique = true)
+    private String customerToken;
 
     private String name;
 
@@ -62,6 +65,12 @@ public class Customer {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @PrePersist
+    public void generateToken() {
+        if (this.customerToken == null) {
+            this.customerToken = UUID.randomUUID().toString();
+        }
+    }
 
     public void addRole(CustomerRole role)
     {
@@ -92,18 +101,19 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Customer customer)) return false;
-        return Objects.equals(getCustomerId(), customer.getCustomerId()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getMobile(), customer.getMobile()) && Objects.equals(getAddresses(), customer.getAddresses()) && Objects.equals(getRoles(), customer.getRoles()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getPassword(), customer.getPassword()) && getGender() == customer.getGender() && getVerificationStatus() == customer.getVerificationStatus() && Objects.equals(getCreatedAt(), customer.getCreatedAt()) && Objects.equals(getUpdatedAt(), customer.getUpdatedAt());
+        return Objects.equals(getCustomerId(), customer.getCustomerId()) && Objects.equals(getCustomerToken(), customer.getCustomerToken()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getMobile(), customer.getMobile()) && Objects.equals(getAddresses(), customer.getAddresses()) && Objects.equals(getRoles(), customer.getRoles()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getPassword(), customer.getPassword()) && getGender() == customer.getGender() && getVerificationStatus() == customer.getVerificationStatus() && Objects.equals(getCreatedAt(), customer.getCreatedAt()) && Objects.equals(getUpdatedAt(), customer.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCustomerId(), getName(), getMobile(), getAddresses(), getRoles(), getEmail(), getPassword(), getGender(), getVerificationStatus(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getCustomerId(), getCustomerToken(), getName(), getMobile(), getAddresses(), getRoles(), getEmail(), getPassword(), getGender(), getVerificationStatus(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
+                ", customerToken='" + customerToken + '\'' +
                 ", name='" + name + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", addresses=" + addresses +
