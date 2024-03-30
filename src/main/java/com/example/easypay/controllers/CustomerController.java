@@ -13,17 +13,17 @@ import com.example.easypay.utils.AppConstants;
 import com.example.easypay.utils.CookieUtils;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("easypay/api/v1/customer")
+
 public class CustomerController {
 
     @Value("${jwt.accessTokenCookieName}")
@@ -32,9 +32,10 @@ public class CustomerController {
     private RefreshTokenService refreshTokenService;
 
     private CustomerService customerService;
-    CustomerController(CustomerService customerService)
+    CustomerController(CustomerService customerService, RefreshTokenService refreshTokenService)
     {
         this.customerService=customerService;
+        this.refreshTokenService=refreshTokenService;
     }
 
 @PostMapping("/register")
@@ -43,6 +44,7 @@ public class CustomerController {
         String customerToken=customerService.register(customerDto);
         return new ResponseEntity<>(new ApiResponse<String>(customerToken), HttpStatus.CREATED);
     }
+    @PostMapping("/login")
    public ResponseEntity<ApiResponse> loginUser(HttpServletResponse httpServletResponse)
     {
         if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated())
@@ -63,6 +65,11 @@ public class CustomerController {
         {
             throw new ApiException("Customer authentication failed");
         }
+    }
+    @GetMapping("/logout")
+    public ResponseEntity<ApiResponse<String>> logout(HttpServletResponse response){
+        //CookieUtils.clear(response,accessTokenCookieName);
+        return new ResponseEntity<>(new ApiResponse<>("Logged out successfully"),HttpStatus.OK);
     }
 
 

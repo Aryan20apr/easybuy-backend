@@ -3,6 +3,7 @@ package com.example.easypay.modals.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,8 +34,8 @@ public class Address {
 
     private Long pincode;
 
-    @ManyToMany(mappedBy = "addresses")
-    private Set<Customer> customers;
+    @ManyToMany(mappedBy = "addresses",fetch = FetchType.LAZY)
+    private Set<Customer> customers=new HashSet<>();
 
 
     @Override

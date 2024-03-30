@@ -19,4 +19,8 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
     @Query("select c from Customer c where c.customerToken = ?1")
     Optional<Customer> findByConsumerToken(String consumerToken);
 
+    Boolean existsByEmail(String email);
+
+    Boolean existsBymobile(String phone);
+
 }

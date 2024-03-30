@@ -11,7 +11,6 @@ import lombok.*;
 public class AddressDto {
 
 
-    private Long id;
 
 
     private int houseNumber;

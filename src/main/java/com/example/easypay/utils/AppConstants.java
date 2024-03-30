@@ -32,8 +32,8 @@ public class AppConstants {
     public static final String REALM_HEADER = "WWW-Authenticate";
 
     public static final String[] PUBLIC_URLS = {
-            "/api/v1/consumer/login",
-            "/api/v1/consumer/register",
+            "/easypay/api/v1/customer/login",
+            "/easypay/api/v1/customer/register",
             "/api/v1/consumer/refresh-token",
 
             "/api/v1/consumer/email/otp",

@@ -4,6 +4,7 @@ package com.example.easypay.modals.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,8 +23,8 @@ public class CustomerRole {
     @Column(name = "role", nullable = false, unique = true)
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<Customer> customers;
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    private Set<Customer> customers=new HashSet<>();
 
 
     public void addCustomer(Customer customer)

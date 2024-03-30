@@ -13,7 +13,7 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken,Long>
     @Query("SELECT rt FROM RefreshToken rt WHERE "
                   + "(rt.tokenType = :type) AND "
                   + "CASE "
-                  + "WHEN rt.tokenType = 'CONSUMER' THEN rt.customer.customerId = :id "
+                  + "WHEN rt.tokenType = 'CUSTOMER' THEN rt.customer.customerId = :id "
 //                  + "WHEN rt.tokenType = 'USER' THEN rt.user.userId = :id "
 //                  + "WHEN rt.tokenType = 'DEPARTMENT' THEN rt.department.departmentId = :id "
                   + "ELSE NULL "

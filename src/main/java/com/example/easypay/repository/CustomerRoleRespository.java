@@ -11,8 +11,6 @@ public interface CustomerRoleRespository extends JpaRepository<CustomerRole,Long
     @Query("SELECT u FROM CustomerRole  u WHERE u.roleName = ?1")
     Optional<CustomerRole> findByRoleName(String roleName);
 
-    Boolean existsByEmail(String email);
 
-    Boolean existsByPhone(String phone);
 
 }

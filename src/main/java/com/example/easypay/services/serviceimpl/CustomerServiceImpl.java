@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Boolean isCustomerPresent(String email)
     {
-        return customerRoleRespository.existsByEmail(email);
+        return customerRepository.existsByEmail(email);
     }
     @Override
     public String register(CustomerDto customerDto) {

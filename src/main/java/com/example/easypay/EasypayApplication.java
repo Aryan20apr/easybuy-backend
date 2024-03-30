@@ -4,12 +4,17 @@ import com.example.easypay.secrets.FirebaseSecrets;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.FileInputStream;
+import java.security.SecureRandom;
 
 @SpringBootApplication
 @EnableConfigurationProperties(FirebaseSecrets.class)
@@ -32,4 +37,16 @@ public class EasypayApplication implements CommandLineRunner {
         FirebaseApp.initializeApp(options);
 
     }
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder()
+    {
+        int strength = 10; // work factor of bcrypt
+        return  new BCryptPasswordEncoder(strength, new SecureRandom());
+    }
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
+
 }

@@ -9,10 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name="customer")
@@ -38,11 +35,11 @@ public class Customer {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.DETACH,CascadeType.REMOVE})
     @JoinTable(name = "customer_address", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"), inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "address_id"))
-    private Set<Address> addresses;
+    private Set<Address> addresses=new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    private Set<CustomerRole> roles;
+    private Set<CustomerRole> roles=new HashSet<>();
 
     private String email;
 
@@ -88,7 +85,7 @@ public class Customer {
     public void addAddress(Address address)
     {
         this.addresses.add(address);
-        address.getCustomers().add(this);
+        //address.getCustomers().add(this);
     }
 
     public void removeAddress(Address address)

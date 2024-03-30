@@ -50,6 +50,7 @@ public class SecurityCustomer implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.customer.getVerificationStatus()== Verification.VERIFIED;
+//        return this.customer.getVerificationStatus()== Verification.VERIFIED;
+        return true;
     }
 }

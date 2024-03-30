@@ -25,6 +25,7 @@ public class CustomerRoleServiceImpl implements CustomerRoleService {
             return userRole.get();
         }
         else{
+            log.info(customerRoleRespository.findAll().toString());
             throw new ApiException("Consumer role with name: "+roleName+" does not exist");
         }
     }
