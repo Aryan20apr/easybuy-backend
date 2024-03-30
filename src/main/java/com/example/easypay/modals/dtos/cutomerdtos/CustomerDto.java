@@ -24,11 +24,12 @@ public class CustomerDto {
 
     private String mobile;
 
+    private String password;
 
-    private Set<Address> addresses;
+    private AddressDto address;
 
 
-    private Set<CustomerRole> roles;
+    private Set<String> roles;
 
     private String email;
 

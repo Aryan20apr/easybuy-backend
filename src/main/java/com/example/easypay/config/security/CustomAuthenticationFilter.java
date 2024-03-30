@@ -113,7 +113,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                 String entityType = JwtUtils.extractEntityType(headerToken);
                 String username = JwtUtils.extractUsername(headerToken);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    if (entityType.equals(AppConstants.ENTITY_TYPE_CONSUMER)) {
+                    if (entityType.equals(AppConstants.ENTITY_TYPE_CUSTOMER)) {
                         userDetails = this.customerDetailsService.loadUserByUsername(username);
                    }
 //                    else if (entityType.equals(AppConstants.ENTITY_TYPE_USER)) {

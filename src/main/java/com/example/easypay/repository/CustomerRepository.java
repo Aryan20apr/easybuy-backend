@@ -10,6 +10,13 @@ import java.util.UUID;
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
     @Query("select c from Customer c where c.email = ?1")
-    Optional<Customer> finfByEmail(String email);
+    Optional<Customer> findByEmail(String email);
+
+    @Query("select c.customerToken from Customer c where c.email = ?1")
+    String findTokenByEmail(String email);
+
+
+    @Query("select c from Customer c where c.customerToken = ?1")
+    Optional<Customer> findByConsumerToken(String consumerToken);
 
 }

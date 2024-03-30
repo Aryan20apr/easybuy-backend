@@ -21,7 +21,7 @@ public class AppConstants {
     public static final long REFRESH_TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 5; //5 days
     public static final String ENTITY_TYPE="ENTITY_TYPE";
 
-    public static final String ENTITY_TYPE_CONSUMER="CUSTOMER";
+    public static final String ENTITY_TYPE_CUSTOMER="CUSTOMER";
 //    public static final String ENTITY_TYPE_DEPARTMENT="DEPARTMENT";
 //    public static final String ENTITY_TYPE_USER="USER";
 
@@ -35,10 +35,7 @@ public class AppConstants {
             "/api/v1/consumer/login",
             "/api/v1/consumer/register",
             "/api/v1/consumer/refresh-token",
-            "/api/v1/department/login",
-            "/api/v1/department/refresh-token",
-            "/api/v1/user/login",
-            "/api/v1/user/refresh-token",
+
             "/api/v1/consumer/email/otp",
             "/api/v1/consumer/email/verify",
             "/api/v1/consumer/phone/otp",
