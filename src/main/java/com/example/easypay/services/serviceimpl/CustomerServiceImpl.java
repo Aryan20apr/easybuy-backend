@@ -77,6 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.addAddress(customerAddress);
             }
             customerRepository.save(customer);
+            log.info(customer.toString());
             return customer.getCustomerToken();
         }
     }

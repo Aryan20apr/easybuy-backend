@@ -2,6 +2,7 @@ package com.example.easypay.config.security.authProviders;
 
 import com.example.easypay.config.security.services.CustomerDetailService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
+@Slf4j
 public class CustomerAuthProvider implements AuthenticationProvider {
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -23,7 +25,7 @@ public class CustomerAuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = String.valueOf(authentication.getPrincipal());
         String password = String.valueOf(authentication.getCredentials());
-
+        log.info("Username and password: "+username+" "+password);
         UserDetails customerDetails = customerDetailService.loadUserByUsername(username);
         if(customerDetails!=null){
             if(bcryptPasswordEncoder.matches(password,customerDetails.getPassword())){

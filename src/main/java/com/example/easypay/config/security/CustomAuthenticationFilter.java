@@ -15,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,7 @@ import static com.example.easypay.utils.AppConstants.AUTH_HEADER;
 import static com.example.easypay.utils.AppConstants.PUBLIC_URLS;
 
 @Component
+@Slf4j
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -60,6 +62,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String uri = request.getRequestURI(); //-get the uri
+        log.info("Request URI: "+uri);
         //-if the uri is a login uri, then login
         if (uri.endsWith(AppConstants.SIGN_IN_URI_ENDING)) {
             //-obtain username and password
@@ -79,7 +82,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
             if (authenticationResult != null) {
                 SecurityContextHolder.getContext().setAuthentication(authenticationResult);
             }
-
+            log.info("URI ending with Login: "+uri);
             filterChain.doFilter(request, response);
         }
         //-if not a login uri, check for access token
@@ -94,6 +97,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                 //-match uri with public urls
                 try{
                     boolean isPublicUrl = Arrays.stream(PUBLIC_URLS).anyMatch(uri::endsWith);
+                    log.info("URI matched with Public Url: "+isPublicUrl);
                     if(isPublicUrl) {
                         filterChain.doFilter(request, response);
                         return;

@@ -15,6 +15,7 @@ public class CookieUtils {
     }
 
     public static void clear(HttpServletResponse httpServletResponse, String name) {
+
         Cookie cookie = new Cookie(name, null);
         cookie.setMaxAge(1);
         cookie.setPath("/");

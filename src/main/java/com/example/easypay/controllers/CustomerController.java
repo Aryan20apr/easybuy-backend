@@ -5,6 +5,7 @@ import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.modals.dtos.shared.LoginRequestDto;
 import com.example.easypay.modals.dtos.shared.LoginResponseDto;
+import com.example.easypay.modals.dtos.shared.RefreshTokenDto;
 import com.example.easypay.modals.securitymodals.RefreshToken;
 import com.example.easypay.services.interfaces.CustomerService;
 import com.example.easypay.services.interfaces.RefreshTokenService;
@@ -22,12 +23,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("easypay/api/v1/customer")
+@RequestMapping("easybuy/api/v1/customer")
 
 public class CustomerController {
 
     @Value("${jwt.accessTokenCookieName}")
     private String accessTokenCookieName;
+
+    @Value("${jwt.refreshTokenCookieName}")
+    private String refreshTokenCookieName;
+
 
     private RefreshTokenService refreshTokenService;
 
@@ -54,6 +59,7 @@ public class CustomerController {
             String accessToken= JwtUtils.generateToken(username, AppConstants.ENTITY_TYPE_CUSTOMER);
             CookieUtils.create(httpServletResponse, accessTokenCookieName, accessToken, false, -1, "localhost");
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(username, AppConstants.ENTITY_TYPE_CUSTOMER);
+            CookieUtils.create(httpServletResponse, refreshTokenCookieName, refreshToken.getRefreshToken(), false, -1, "localhost");
             LoginResponseDto loginResponseDto = new LoginResponseDto();
             loginResponseDto.setAccessToken(accessToken);
             loginResponseDto.setToken(token);
@@ -68,9 +74,25 @@ public class CustomerController {
     }
     @GetMapping("/logout")
     public ResponseEntity<ApiResponse<String>> logout(HttpServletResponse response){
-        //CookieUtils.clear(response,accessTokenCookieName);
+        CookieUtils.clear(response,accessTokenCookieName);
+        CookieUtils.clear(response,refreshTokenCookieName);
+
         return new ResponseEntity<>(new ApiResponse<>("Logged out successfully"),HttpStatus.OK);
     }
+
+    @PutMapping("/refresh-token")
+    public ResponseEntity<ApiResponse<String>> refreshJwtToken(@RequestBody RefreshTokenDto refreshTokenDto, HttpServletResponse httpServletResponse) {
+        Boolean isRefreshTokenValid=this.refreshTokenService.verifyRefreshToken(refreshTokenDto.getRefreshToken());
+        if(isRefreshTokenValid){
+            String token= JwtUtils.generateToken(refreshTokenDto.getUsername(), AppConstants.ENTITY_TYPE_CUSTOMER);
+            CookieUtils.create(httpServletResponse, accessTokenCookieName, token, false, -1, "localhost");
+            return new ResponseEntity<>(new ApiResponse<>(token),HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(new ApiResponse<>("The refresh token is expired! Cannot generate a new token! Please re-login"),HttpStatus.OK);
+        }
+    }
+
 
 
 

@@ -1,5 +1,6 @@
 package com.example.easypay;
 
+import com.example.easypay.secrets.EmailConfigurationProperties;
 import com.example.easypay.secrets.FirebaseSecrets;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -17,7 +18,7 @@ import java.io.FileInputStream;
 import java.security.SecureRandom;
 
 @SpringBootApplication
-@EnableConfigurationProperties(FirebaseSecrets.class)
+@EnableConfigurationProperties({FirebaseSecrets.class, EmailConfigurationProperties.class})
 public class EasypayApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
