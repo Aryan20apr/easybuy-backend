@@ -1,6 +1,6 @@
 package com.example.easypay.config.security;
 
-import com.example.easypay.config.security.services.CustomerDetailService;
+import com.example.easypay.config.security.services.customer.CustomerDetailService;
 import com.example.easypay.config.security.utils.JwtUtils;
 import com.example.easypay.modals.dtos.shared.LoginRequestDto;
 import com.example.easypay.utils.AppConstants;
@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

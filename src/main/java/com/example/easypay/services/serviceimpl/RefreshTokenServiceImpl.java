@@ -1,9 +1,9 @@
 package com.example.easypay.services.serviceimpl;
 
-import com.example.easypay.modals.entities.Customer;
+import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.securitymodals.CustomerRefreshToken;
 import com.example.easypay.modals.securitymodals.RefreshToken;
-import com.example.easypay.repository.CustomerRepository;
+import com.example.easypay.repository.customer.CustomerRepository;
 import com.example.easypay.repository.RefreshTokenRepository;
 import com.example.easypay.services.interfaces.RefreshTokenService;
 import com.example.easypay.utils.AppConstants;

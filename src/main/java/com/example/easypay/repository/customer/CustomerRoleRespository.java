@@ -1,6 +1,6 @@
-package com.example.easypay.repository;
+package com.example.easypay.repository.customer;
 
-import com.example.easypay.modals.entities.CustomerRole;
+import com.example.easypay.modals.entities.customer.CustomerRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -22,8 +22,9 @@ public class AppConstants {
     public static final String ENTITY_TYPE="ENTITY_TYPE";
 
     public static final String ENTITY_TYPE_CUSTOMER="CUSTOMER";
-//    public static final String ENTITY_TYPE_DEPARTMENT="DEPARTMENT";
-//    public static final String ENTITY_TYPE_USER="USER";
+
+    public static final String ENTITY_TYPE_SELLER="SELLER";
+    public static final String ENTITY_TYPE_ADMIN="ADMIN";
 
     public static final String BEARER_TOKEN_PREFIX = "Bearer ";
     public static final String BASIC_TOKEN_PREFIX =  "Basic ";

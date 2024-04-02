@@ -1,4 +1,4 @@
-package com.example.easypay.controllers;
+package com.example.easypay.controllers.Customer;
 
 import com.example.easypay.config.security.utils.JwtUtils;
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;

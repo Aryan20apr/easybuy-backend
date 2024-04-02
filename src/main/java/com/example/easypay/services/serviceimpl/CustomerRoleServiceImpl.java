@@ -1,7 +1,7 @@
 package com.example.easypay.services.serviceimpl;
 
-import com.example.easypay.modals.entities.CustomerRole;
-import com.example.easypay.repository.CustomerRoleRespository;
+import com.example.easypay.modals.entities.customer.CustomerRole;
+import com.example.easypay.repository.customer.CustomerRoleRespository;
 import com.example.easypay.services.interfaces.CustomerRoleService;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.transaction.Transactional;

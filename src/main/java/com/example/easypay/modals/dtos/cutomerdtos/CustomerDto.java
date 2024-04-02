@@ -1,14 +1,10 @@
 package com.example.easypay.modals.dtos.cutomerdtos;
 
-import com.example.easypay.modals.entities.Address;
-import com.example.easypay.modals.entities.CustomerRole;
 import com.example.easypay.modals.enums.Gender;
 import com.example.easypay.modals.enums.Verification;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Builder
 @Setter

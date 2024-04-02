@@ -1,6 +1,7 @@
 package com.example.easypay.config.security.authProviders;
 
-import com.example.easypay.config.security.services.customer.CustomerDetailService;
+
+import com.example.easypay.config.security.services.seller.SellerDetailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,20 +18,20 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class CustomerAuthProvider implements AuthenticationProvider {
+public class SellerAuthProvider implements AuthenticationProvider {
 
     private final PasswordEncoder bcryptPasswordEncoder;
-    private final CustomerDetailService customerDetailService;
+    private final SellerDetailService sellerDetailService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = String.valueOf(authentication.getPrincipal());
         String password = String.valueOf(authentication.getCredentials());
         log.info("Username and password: "+username+" "+password);
-        UserDetails customerDetails = customerDetailService.loadUserByUsername(username);
-        if(customerDetails!=null){
-            if(bcryptPasswordEncoder.matches(password,customerDetails.getPassword())){
-                if(customerDetails.isEnabled()){
-                    return new UsernamePasswordAuthenticationToken(username,password,customerDetails.getAuthorities());
+        UserDetails sellerDetails = sellerDetailService.loadUserByUsername(username);
+        if(sellerDetails!=null){
+            if(bcryptPasswordEncoder.matches(password,sellerDetails.getPassword())){
+                if(sellerDetails.isEnabled()){
+                    return new UsernamePasswordAuthenticationToken(username,password,sellerDetails.getAuthorities());
                 }
                 else{
                     throw new DisabledException("Account has not been verified");

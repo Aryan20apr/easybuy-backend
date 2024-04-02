@@ -1,27 +1,23 @@
 package com.example.easypay.services.serviceimpl;
 
-import com.example.easypay.config.security.utils.JwtUtils;
-import com.example.easypay.modals.dtos.cutomerdtos.AddressDto;
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
 import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
 import com.example.easypay.modals.dtos.shared.NewPasswordDto;
 import com.example.easypay.modals.dtos.shared.ResetPasswordDto;
-import com.example.easypay.modals.entities.Address;
-import com.example.easypay.modals.entities.Customer;
-import com.example.easypay.modals.entities.CustomerRole;
+import com.example.easypay.modals.entities.customer.Address;
+import com.example.easypay.modals.entities.customer.Customer;
+import com.example.easypay.modals.entities.customer.CustomerRole;
 import com.example.easypay.modals.enums.Verification;
-import com.example.easypay.repository.CustomerRepository;
-import com.example.easypay.repository.CustomerRoleRespository;
+import com.example.easypay.repository.customer.CustomerRepository;
+import com.example.easypay.repository.customer.CustomerRoleRespository;
 import com.example.easypay.services.interfaces.CustomerRoleService;
 import com.example.easypay.services.interfaces.CustomerService;
-import com.example.easypay.utils.AppConstants;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

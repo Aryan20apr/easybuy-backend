@@ -1,6 +1,7 @@
-package com.example.easypay.modals.entities;
+package com.example.easypay.modals.entities.seller;
 
 
+import com.example.easypay.modals.entities.customer.Customer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CustomerRole {
+public class SellerRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,18 +25,18 @@ public class CustomerRole {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
-    private Set<Customer> customers=new HashSet<>();
+    private Set<Seller> sellers=new HashSet<>();
 
 
-    public void addCustomer(Customer customer)
+    public void addSeller(Seller seller)
     {
-        this.customers.add(customer);
-        customer.getRoles().add(this);
+        this.sellers.add(seller);
+        seller.getRoles().add(this);
     }
 
-    public void removeCustomer(Customer customer)
+    public void removeSeller(Seller seller)
     {
-        this.customers.remove(customer);
-        customer.getRoles().remove(this);
+        this.sellers.remove(seller);
+        seller.getRoles().remove(this);
     }
 }

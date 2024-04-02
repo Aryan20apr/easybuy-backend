@@ -1,7 +1,6 @@
-package com.example.easypay.modals.entities.seller;
+package com.example.easypay.modals.entities.customer;
 
 
-import com.example.easypay.modals.entities.Customer;
 import jakarta.persistence.*;
 import lombok.*;
 

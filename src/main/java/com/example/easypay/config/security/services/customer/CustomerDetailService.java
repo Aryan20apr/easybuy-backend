@@ -1,8 +1,8 @@
-package com.example.easypay.config.security.services;
+package com.example.easypay.config.security.services.customer;
 
-import com.example.easypay.modals.entities.Customer;
+import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.securitymodals.SecurityCustomer;
-import com.example.easypay.repository.CustomerRepository;
+import com.example.easypay.repository.customer.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

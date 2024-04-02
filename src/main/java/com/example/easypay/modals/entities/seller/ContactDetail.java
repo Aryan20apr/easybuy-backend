@@ -21,6 +21,8 @@ public class ContactDetail {
 
     String customerCare;
 
+    String email;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "seller_id", referencedColumnName = "seller_id")
     Seller seller;

@@ -1,4 +1,4 @@
-package com.example.easypay.modals.entities;
+package com.example.easypay.modals.entities.customer;
 
 import com.example.easypay.modals.enums.Gender;
 import com.example.easypay.modals.enums.Verification;

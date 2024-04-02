@@ -1,6 +1,6 @@
 package com.example.easypay.modals.securitymodals;
 
-import com.example.easypay.modals.entities.Customer;
+import com.example.easypay.modals.entities.customer.Customer;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
