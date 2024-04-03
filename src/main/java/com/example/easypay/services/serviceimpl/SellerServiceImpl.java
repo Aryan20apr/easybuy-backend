@@ -1,5 +1,6 @@
 package com.example.easypay.services.serviceimpl;
 
+import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
 import com.example.easypay.modals.dtos.sellerDto.SellerDto;
 import com.example.easypay.modals.dtos.projections.SellerDetailsProjection;
 import com.example.easypay.modals.dtos.shared.NewPasswordDto;
@@ -98,8 +99,12 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public SellerDetailsProjection getSellerDetails() {
-        return null;
+    public SellerDetailsProjection getSellerDetails(String token) {
+
+
+        SellerDetailsProjection sellerDetails= sellerRepository.getSellerDetails(token);
+        log.info("sellerDetails="+(sellerDetails==null));
+        return sellerDetails;
     }
 
     @Override

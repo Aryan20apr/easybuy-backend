@@ -2,6 +2,7 @@ package com.example.easypay.controllers.Customer;
 
 import com.example.easypay.config.security.utils.JwtUtils;
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
+import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.modals.dtos.shared.LoginRequestDto;
 import com.example.easypay.modals.dtos.shared.LoginResponseDto;
@@ -15,6 +16,7 @@ import com.example.easypay.utils.CookieUtils;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/easybuy/api/v1/customer")
+@Slf4j
 public class CustomerController {
 
     @Value("${jwt.accessTokenCookieName}")
@@ -92,7 +95,12 @@ public class CustomerController {
         }
     }
 
-
+    @GetMapping
+    public ResponseEntity<ApiResponse<CustomerDetailsProjection>> getConsumer(@RequestParam("token") String token){
+        CustomerDetailsProjection customerDetails=customerService.getCustomerDetails(token);
+        log.info("Customer details null:"+(customerDetails==null));
+        return new ResponseEntity<>(new ApiResponse<>(customerDetails),HttpStatus.OK);
+    }
 
 
 }

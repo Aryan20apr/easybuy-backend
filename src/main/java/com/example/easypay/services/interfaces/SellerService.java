@@ -16,7 +16,7 @@ public interface SellerService {
 
     public String getSellerToken(String email);
 
-    public SellerDetailsProjection getSellerDetails();
+    public SellerDetailsProjection getSellerDetails(String token);
 
     public void sendVerificationEmail();
 

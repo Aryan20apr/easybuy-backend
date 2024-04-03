@@ -15,7 +15,7 @@ public interface CustomerService {
 
     public String getConsumerToken(String email);
 
-    public CustomerDetailsProjection getCustomerDetails();
+    public CustomerDetailsProjection getCustomerDetails(String token);
 
     public void sendVerificationEmail();
 

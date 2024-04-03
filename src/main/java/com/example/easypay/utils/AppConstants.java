@@ -35,11 +35,10 @@ public class AppConstants {
     public static final String[] PUBLIC_URLS = {
             "/easybuy/api/v1/customer/login",
             "/easybuy/api/v1/customer/register",
+            "/easybuy/api/v1/customer/refresh-token",
             "/easybuy/api/v1/seller/login",
             "/easybuy/api/v1/seller/register",
-//            "easybuy/api/v1/consumer/logout",
-            "/api/v1/consumer/refresh-token",
-
+            "/easybuy/api/v1/seller/refresh-token",
             "/api/v1/consumer/email/otp",
             "/api/v1/consumer/email/verify",
             "/api/v1/consumer/phone/otp",

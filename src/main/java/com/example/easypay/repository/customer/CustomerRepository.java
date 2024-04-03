@@ -1,5 +1,6 @@
 package com.example.easypay.repository.customer;
 
+import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
 import com.example.easypay.modals.entities.customer.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +23,18 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
     Boolean existsByEmail(String email);
 
     Boolean existsBymobile(String phone);
+
+    @Query("""
+            SELECT
+            c.customerToken as customerToken,
+            c.name as name,
+            c.email as email,
+            c.mobile as mobile,
+            c.gender as gender,
+            c.verificationStatus as verificationStatus
+            FROM
+            Customer c WHERE c.customerToken = ?1
+            """)
+    CustomerDetailsProjection getCustomerDetails(String token);
 
 }

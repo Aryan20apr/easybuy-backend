@@ -2,6 +2,8 @@ package com.example.easypay.controllers.Seller;
 
 import com.example.easypay.config.security.utils.JwtUtils;
 
+import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
+import com.example.easypay.modals.dtos.projections.SellerDetailsProjection;
 import com.example.easypay.modals.dtos.sellerDto.SellerDto;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.modals.dtos.shared.LoginResponseDto;
@@ -14,6 +16,7 @@ import com.example.easypay.utils.AppConstants;
 import com.example.easypay.utils.CookieUtils;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/easybuy/api/v1/seller")
-
+@Slf4j
 public class SellerController {
 
     @Value("${jwt.accessTokenCookieName}")
@@ -89,6 +92,12 @@ public class SellerController {
         else{
             return new ResponseEntity<>(new ApiResponse<>("The refresh token is expired! Cannot generate a new token! Please re-login"),HttpStatus.OK);
         }
+    }
+    @GetMapping
+    public ResponseEntity<ApiResponse<SellerDetailsProjection>> getConsumer(@RequestParam("token") String token){
+       SellerDetailsProjection sellerDetails=sellerService.getSellerDetails(token);
+        log.info("Customer details null:"+(sellerDetails==null));
+        return new ResponseEntity<>(new ApiResponse<>(sellerDetails),HttpStatus.OK);
     }
 
 

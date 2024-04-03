@@ -125,7 +125,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                     if (entityType.equals(AppConstants.ENTITY_TYPE_CUSTOMER)) {
                         userDetails = this.customerDetailsService.loadUserByUsername(username);
                    }
-                    else    if (entityType.equals(AppConstants.ENTITY_TYPE_SELLER)) {
+                    else if (entityType.equals(AppConstants.ENTITY_TYPE_SELLER)) {
                         userDetails = this.sellerDetailsService.loadUserByUsername(username);
                     }
 //                    else if (entityType.equals(AppConstants.ENTITY_TYPE_USER)) {

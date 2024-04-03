@@ -88,9 +88,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDetailsProjection getCustomerDetails() {
-        return null;
-    }
+    public CustomerDetailsProjection getCustomerDetails(String token) {
+
+
+            CustomerDetailsProjection customerDetails= customerRepository.getCustomerDetails(token);
+            log.info("customerDetails="+(customerDetails==null));
+            return customerDetails;
+        }
+
 
     @Override
     public void sendVerificationEmail() {

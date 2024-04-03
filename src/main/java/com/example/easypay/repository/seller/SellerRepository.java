@@ -1,5 +1,7 @@
 package com.example.easypay.repository.seller;
 
+import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
+import com.example.easypay.modals.dtos.projections.SellerDetailsProjection;
 import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.entities.seller.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,6 +24,17 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     Boolean existsByEmail(String email);
 
+
+    @Query("""
+            SELECT
+            s.sellerToken as sellerToken,
+            s.companyName as company,
+            s.email as email,
+            s.verificationStatus as verificationStatus
+            FROM
+            Seller s WHERE s.sellerToken = ?1
+            """)
+    SellerDetailsProjection getSellerDetails(String token);
 
 
 }
