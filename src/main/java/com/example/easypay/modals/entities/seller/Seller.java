@@ -40,7 +40,7 @@ public class Seller {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "seller_roles", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "seller_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-   private HashSet<SellerRole> roles=new HashSet<SellerRole>();
+   private Set<SellerRole> roles=new HashSet<SellerRole>();
 
     private String email;
 
@@ -72,6 +72,7 @@ public class Seller {
     public void addContact(ContactDetail contact)
     {
         this.contactDetails.add(contact);
+        //contact.setSeller(this);
 
     }
 
@@ -79,32 +80,18 @@ public class Seller {
     {
         this.contactDetails.remove(contactDetail);
 
+
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Seller seller)) return false;
-        return Objects.equals(getSellerId(), seller.getSellerId()) && Objects.equals(getSellerToken(), seller.getSellerToken()) && Objects.equals(getCompanyName(), seller.getCompanyName()) && Objects.equals(getContactDetails(), seller.getContactDetails()) && Objects.equals(getEmail(), seller.getEmail()) && Objects.equals(getPassword(), seller.getPassword()) && getVerificationStatus() == seller.getVerificationStatus() && Objects.equals(getCreatedAt(), seller.getCreatedAt()) && Objects.equals(getUpdatedAt(), seller.getUpdatedAt());
+        return Objects.equals(getSellerId(), seller.getSellerId()) && Objects.equals(getSellerToken(), seller.getSellerToken()) && Objects.equals(getCompanyName(), seller.getCompanyName()) && Objects.equals(getEmail(), seller.getEmail()) && Objects.equals(getPassword(), seller.getPassword()) && Objects.equals(getRole(), seller.getRole()) && getVerificationStatus() == seller.getVerificationStatus() && Objects.equals(getCreatedAt(), seller.getCreatedAt()) && Objects.equals(getUpdatedAt(), seller.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSellerId(), getSellerToken(), getCompanyName(), getContactDetails(), getEmail(), getPassword(), getVerificationStatus(), getCreatedAt(), getUpdatedAt());
-    }
-
-    @Override
-    public String toString() {
-        return "Seller{" +
-                "sellerId=" + sellerId +
-                ", sellerToken='" + sellerToken + '\'' +
-                ", companyName='" + companyName + '\'' +
-                ", contactDetails=" + contactDetails +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", verificationStatus=" + verificationStatus +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return Objects.hash(getSellerId(), getSellerToken(), getCompanyName(), getEmail(), getPassword(), getRole(), getVerificationStatus(), getCreatedAt(), getUpdatedAt());
     }
 }

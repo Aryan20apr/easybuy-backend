@@ -19,24 +19,14 @@ public class SellerDto {
 
     private String companyName;
 
-
-    private Set<ContactDetail>  contactDetails=new HashSet<>();
-
-
-    private HashSet<String> roles=new HashSet<>();
+    private Set<ContactDetailDto>  contactDetails=new HashSet<>();
 
     private String email;
 
     private String password;
 
-
-    private final String role=ENTITY_TYPE_SELLER;
-
-
+    private Set<String> roles;
 
     private Verification verificationStatus;
-
-
-
 
 }

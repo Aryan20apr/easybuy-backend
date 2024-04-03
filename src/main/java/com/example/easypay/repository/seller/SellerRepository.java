@@ -18,10 +18,10 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
 
     @Query("select s from Seller s where s.sellerToken = ?1")
-    Optional<Customer> findBySellerToken(String sellerToken);
+    Optional<Seller> findBySellerToken(String sellerToken);
 
     Boolean existsByEmail(String email);
 
-    Boolean existsBymobile(String phone);
+
 
 }

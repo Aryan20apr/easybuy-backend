@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/upload")
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class UploadController {

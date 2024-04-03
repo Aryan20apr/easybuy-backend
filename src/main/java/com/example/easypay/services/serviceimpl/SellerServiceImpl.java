@@ -58,7 +58,7 @@ public class SellerServiceImpl implements SellerService {
         {
             Seller seller=new Seller();
             HashSet<SellerRole> roles=new HashSet<>();
-            HashSet<String> sellerRoles=sellerDto.getRoles();
+            Set<String> sellerRoles=sellerDto.getRoles();
 
             sellerRoles.forEach(sellerRole -> {
                 SellerRole role = sellerRoleService.getSellerRoleByRoleName(sellerRole);
@@ -70,17 +70,25 @@ public class SellerServiceImpl implements SellerService {
             seller.setRoles(roles);
 
             seller.setVerificationStatus(Verification.UNVERIFIED);
+            //Set<ContactDetail> contacts=new HashSet<>();
             if (sellerDto.getContactDetails() != null) {
-                ContactDetail contactDetails = this.modelMapper.map(sellerDto.getContactDetails(), ContactDetail.class);
-                seller.addContact(contactDetails);
+                //ContactDetail contactDetails = this.modelMapper.map(sellerDto.getContactDetails(), ContactDetail.class);
+
+                sellerDto.getContactDetails().forEach(contact->{
+                    ContactDetail contactDetails = this.modelMapper.map(contact, ContactDetail.class);
+                   contactDetails.addSeller(seller);
+                    seller.addContact(contactDetails);
+                    //contacts.add(contactDetails);
+                });
             }
+
             sellerRepository.save(seller);
             log.info(seller.toString());
             return seller.getSellerToken();
         }
     }
     @Override
-    public String getConsumerToken(String email) {
+    public String getSellerToken(String email) {
         return sellerRepository.findTokenByEmail(email);
     }
 

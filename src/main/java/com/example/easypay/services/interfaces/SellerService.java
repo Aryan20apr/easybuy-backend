@@ -14,7 +14,7 @@ public interface SellerService {
 
     public String login(HttpServletResponse httpServletResponse);
 
-    public String getConsumerToken(String email);
+    public String getSellerToken(String email);
 
     public SellerDetailsProjection getSellerDetails();
 

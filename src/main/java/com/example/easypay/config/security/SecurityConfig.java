@@ -1,6 +1,7 @@
 package com.example.easypay.config.security;
 
 import com.example.easypay.config.security.authProviders.CustomerAuthProvider;
+import com.example.easypay.config.security.authProviders.SellerAuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,8 @@ public class SecurityConfig {
 
     private final CustomerAuthProvider customerAuthProvider;
 
+    private final SellerAuthProvider sellerAuthProvider;
+
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
 
@@ -50,7 +53,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(customerAuthProvider);
+        authenticationManagerBuilder.authenticationProvider(customerAuthProvider).authenticationProvider(sellerAuthProvider);
 
         return authenticationManagerBuilder.build();
     }

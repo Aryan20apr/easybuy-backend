@@ -1,10 +1,13 @@
 package com.example.easypay.services.serviceimpl;
 
 import com.example.easypay.modals.entities.customer.Customer;
+import com.example.easypay.modals.entities.seller.Seller;
 import com.example.easypay.modals.securitymodals.CustomerRefreshToken;
 import com.example.easypay.modals.securitymodals.RefreshToken;
+import com.example.easypay.modals.securitymodals.SellerRefreshToken;
 import com.example.easypay.repository.customer.CustomerRepository;
 import com.example.easypay.repository.RefreshTokenRepository;
+import com.example.easypay.repository.seller.SellerRepository;
 import com.example.easypay.services.interfaces.RefreshTokenService;
 import com.example.easypay.utils.AppConstants;
 import com.example.easypay.utils.exceptionUtil.ApiException;
@@ -26,17 +29,18 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
 
     private final CustomerRepository customerRepository;
+    private final SellerRepository sellerRepository;
     private RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public RefreshToken createRefreshToken(String username, String entityType) {
-//        if (entityType.equals(AppConstants.ENTITY_TYPE_DEPARTMENT)) {
-//            return getDepartmentRefreshToken(username);
-//        }
+        if (entityType.equals(AppConstants.ENTITY_TYPE_SELLER)) {
+            return getSellerRefreshToken(username);
+        }
 //        else if (entityType.equals(AppConstants.ENTITY_TYPE_USER)) {
 //            return getUserRefreshToken(username);
 //        }
-        if (entityType.equals(AppConstants.ENTITY_TYPE_CUSTOMER)) {
+        else if (entityType.equals(AppConstants.ENTITY_TYPE_CUSTOMER)) {
             return getCustomerRefreshToken(username);
         }
         throw new ApiException("Invalid entity type: " + entityType);
@@ -69,6 +73,25 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             customerRefreshToken.setRefreshToken(UUID.randomUUID().toString());
             customerRefreshToken = refreshTokenRepository.save(customerRefreshToken);
             return customerRefreshToken;
+        }
+
+    }
+
+    private RefreshToken getSellerRefreshToken(String username) {
+        Seller seller = this.sellerRepository.findByEmail(username).orElseThrow(() -> new ApiException(("User with email: " + username + " does not exist")));
+        Optional<RefreshToken> refreshTokenOptional = this.refreshTokenRepository.findByTypeAndId(AppConstants.ENTITY_TYPE_SELLER, seller.getSellerId());
+        if (refreshTokenOptional.isPresent()) {
+            RefreshToken refreshToken = refreshTokenOptional.get();
+            refreshToken.setExpiresAt(Instant.now().plusMillis(AppConstants.REFRESH_TOKEN_EXPIRATION_TIME));
+            refreshToken = refreshTokenRepository.save(refreshToken);
+            return refreshToken;
+        } else {
+            SellerRefreshToken sellerRefreshToken = new SellerRefreshToken();
+            sellerRefreshToken.setSeller(this.sellerRepository.findByEmail(username).orElseThrow(() -> new ApiException("User with username: " + username + " does not exist")));
+            sellerRefreshToken.setExpiresAt(Instant.now().plusMillis(AppConstants.REFRESH_TOKEN_EXPIRATION_TIME));
+            sellerRefreshToken.setRefreshToken(UUID.randomUUID().toString());
+            sellerRefreshToken = refreshTokenRepository.save(sellerRefreshToken);
+            return sellerRefreshToken;
         }
 
     }

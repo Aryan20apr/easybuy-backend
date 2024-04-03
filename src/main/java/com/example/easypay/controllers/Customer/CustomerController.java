@@ -23,8 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("easybuy/api/v1/customer")
-
+@RequestMapping("/easybuy/api/v1/customer")
 public class CustomerController {
 
     @Value("${jwt.accessTokenCookieName}")
@@ -43,7 +42,7 @@ public class CustomerController {
         this.refreshTokenService=refreshTokenService;
     }
 
-@PostMapping("/register")
+@PostMapping(value = "/register", produces = "application/json")
    public ResponseEntity<ApiResponse<String>> registerUser(@RequestBody CustomerDto customerDto)
     {
         String customerToken=customerService.register(customerDto);

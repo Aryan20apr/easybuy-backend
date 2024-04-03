@@ -1,13 +1,15 @@
 package com.example.easypay.controllers.Seller;
 
 import com.example.easypay.config.security.utils.JwtUtils;
-import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
+
+import com.example.easypay.modals.dtos.sellerDto.SellerDto;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.modals.dtos.shared.LoginResponseDto;
 import com.example.easypay.modals.dtos.shared.RefreshTokenDto;
 import com.example.easypay.modals.securitymodals.RefreshToken;
-import com.example.easypay.services.interfaces.CustomerService;
+
 import com.example.easypay.services.interfaces.RefreshTokenService;
+import com.example.easypay.services.interfaces.SellerService;
 import com.example.easypay.utils.AppConstants;
 import com.example.easypay.utils.CookieUtils;
 import com.example.easypay.utils.exceptionUtil.ApiException;
@@ -19,7 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("easybuy/api/v1/customer")
+@RequestMapping("/easybuy/api/v1/seller")
 
 public class SellerController {
 
@@ -32,18 +34,18 @@ public class SellerController {
 
     private RefreshTokenService refreshTokenService;
 
-    private CustomerService customerService;
-    CustomerController(CustomerService customerService, RefreshTokenService refreshTokenService)
+    private SellerService sellerService;
+   SellerController(SellerService sellerService, RefreshTokenService refreshTokenService)
     {
-        this.customerService=customerService;
+        this.sellerService=sellerService;
         this.refreshTokenService=refreshTokenService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<String>> registerUser(@RequestBody CustomerDto customerDto)
+    public ResponseEntity<ApiResponse<String>> registerUser(@RequestBody SellerDto sellerDto)
     {
-        String customerToken=customerService.register(customerDto);
-        return new ResponseEntity<>(new ApiResponse<String>(customerToken), HttpStatus.CREATED);
+        String sellerToken=sellerService.register(sellerDto);
+        return new ResponseEntity<>(new ApiResponse<>(sellerToken), HttpStatus.CREATED);
     }
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> loginUser(HttpServletResponse httpServletResponse)
@@ -51,10 +53,10 @@ public class SellerController {
         if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated())
         {
             String username=(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String token=customerService.getConsumerToken(username);
-            String accessToken= JwtUtils.generateToken(username, AppConstants.ENTITY_TYPE_CUSTOMER);
+            String token=sellerService.getSellerToken(username);
+            String accessToken= JwtUtils.generateToken(username, AppConstants.ENTITY_TYPE_SELLER);
             CookieUtils.create(httpServletResponse, accessTokenCookieName, accessToken, false, -1, "localhost");
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(username, AppConstants.ENTITY_TYPE_CUSTOMER);
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(username, AppConstants.ENTITY_TYPE_SELLER);
             CookieUtils.create(httpServletResponse, refreshTokenCookieName, refreshToken.getRefreshToken(), false, -1, "localhost");
             LoginResponseDto loginResponseDto = new LoginResponseDto();
             loginResponseDto.setAccessToken(accessToken);
@@ -65,7 +67,7 @@ public class SellerController {
         }
         else
         {
-            throw new ApiException("Customer authentication failed");
+            throw new ApiException("Seller authentication failed");
         }
     }
     @GetMapping("/logout")
@@ -80,7 +82,7 @@ public class SellerController {
     public ResponseEntity<ApiResponse<String>> refreshJwtToken(@RequestBody RefreshTokenDto refreshTokenDto, HttpServletResponse httpServletResponse) {
         Boolean isRefreshTokenValid=this.refreshTokenService.verifyRefreshToken(refreshTokenDto.getRefreshToken());
         if(isRefreshTokenValid){
-            String token= JwtUtils.generateToken(refreshTokenDto.getUsername(), AppConstants.ENTITY_TYPE_CUSTOMER);
+            String token= JwtUtils.generateToken(refreshTokenDto.getUsername(), AppConstants.ENTITY_TYPE_SELLER);
             CookieUtils.create(httpServletResponse, accessTokenCookieName, token, false, -1, "localhost");
             return new ResponseEntity<>(new ApiResponse<>(token),HttpStatus.OK);
         }

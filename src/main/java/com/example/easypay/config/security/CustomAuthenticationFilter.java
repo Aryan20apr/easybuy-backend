@@ -1,6 +1,7 @@
 package com.example.easypay.config.security;
 
 import com.example.easypay.config.security.services.customer.CustomerDetailService;
+import com.example.easypay.config.security.services.seller.SellerDetailService;
 import com.example.easypay.config.security.utils.JwtUtils;
 import com.example.easypay.modals.dtos.shared.LoginRequestDto;
 import com.example.easypay.utils.AppConstants;
@@ -51,6 +52,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private CustomerDetailService customerDetailsService;
 
+    @Autowired
+    private SellerDetailService sellerDetailsService;
+
     @Value("${jwt.accessTokenCookieName}")
     private String accessTokenCookieName;
 
@@ -61,6 +65,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String uri = request.getRequestURI(); //-get the uri
+        log.info("Request:"+request);
         log.info("Request URI: "+uri);
         //-if the uri is a login uri, then login
         if (uri.endsWith(AppConstants.SIGN_IN_URI_ENDING)) {
@@ -94,7 +99,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
             if (headerToken == null) {
                 System.out.println("Token is not present");
                 //-match uri with public urls
-                try{
+               try{
                     boolean isPublicUrl = Arrays.stream(PUBLIC_URLS).anyMatch(uri::endsWith);
                     log.info("URI matched with Public Url: "+isPublicUrl);
                     if(isPublicUrl) {
@@ -103,6 +108,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                     }
                     else{
                         throw new ApiException("Access token is not present");
+//
                     }
                 }
                 catch (ApiException e){
@@ -119,6 +125,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                     if (entityType.equals(AppConstants.ENTITY_TYPE_CUSTOMER)) {
                         userDetails = this.customerDetailsService.loadUserByUsername(username);
                    }
+                    else    if (entityType.equals(AppConstants.ENTITY_TYPE_SELLER)) {
+                        userDetails = this.sellerDetailsService.loadUserByUsername(username);
+                    }
 //                    else if (entityType.equals(AppConstants.ENTITY_TYPE_USER)) {
 //                        userDetails = this.customUserDetailsService.loadUserByUsername(username);
 //                    } else if (entityType.equals(AppConstants.ENTITY_TYPE_DEPARTMENT)) {

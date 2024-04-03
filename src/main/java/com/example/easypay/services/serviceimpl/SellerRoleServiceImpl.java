@@ -7,6 +7,7 @@ import com.example.easypay.repository.seller.SellerRoleRepository;
 import com.example.easypay.services.interfaces.SellerRoleService;
 import com.example.easypay.services.interfaces.SellerService;
 import com.example.easypay.utils.exceptionUtil.ApiException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class SellerRoleServiceImpl implements SellerRoleService {
     private final SellerRoleRepository sellerRoleRespository;
     @Override
