@@ -21,17 +21,20 @@ public class Address {
     @Column(name = "address_id")
     private Long id;
 
-    @Column(name = "house_number")
+    @Column(name = "house_number",nullable = false)
     private int houseNumber;
 
+    @Column(nullable = false)
     private String addressLine1;
 
     private String addressLine2;
 
+    @Column(nullable = false)
     private String city;
 
     private String state;
 
+    @Column(nullable = false)
     private Long pincode;
 
     @ManyToMany(mappedBy = "addresses",fetch = FetchType.LAZY)

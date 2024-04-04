@@ -1,5 +1,6 @@
 package com.example.easypay.config.security;
 
+import com.example.easypay.config.security.authProviders.AdminAuthProvider;
 import com.example.easypay.config.security.authProviders.CustomerAuthProvider;
 import com.example.easypay.config.security.authProviders.SellerAuthProvider;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,8 @@ public class SecurityConfig {
 
     private final SellerAuthProvider sellerAuthProvider;
 
+    private final AdminAuthProvider adminAuthProvider;
+
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
 
@@ -53,7 +56,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(customerAuthProvider).authenticationProvider(sellerAuthProvider);
+        authenticationManagerBuilder
+                .authenticationProvider(customerAuthProvider)
+                .authenticationProvider(sellerAuthProvider)
+                .authenticationProvider(adminAuthProvider);
 
         return authenticationManagerBuilder.build();
     }

@@ -1,5 +1,6 @@
 package com.example.easypay.config.security;
 
+import com.example.easypay.config.security.services.Admin.AdminDetailService;
 import com.example.easypay.config.security.services.customer.CustomerDetailService;
 import com.example.easypay.config.security.services.seller.SellerDetailService;
 import com.example.easypay.config.security.utils.JwtUtils;
@@ -54,6 +55,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private SellerDetailService sellerDetailsService;
+
+    @Autowired
+    private AdminDetailService adminDetailsService;
 
     @Value("${jwt.accessTokenCookieName}")
     private String accessTokenCookieName;
@@ -128,9 +132,10 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                     else if (entityType.equals(AppConstants.ENTITY_TYPE_SELLER)) {
                         userDetails = this.sellerDetailsService.loadUserByUsername(username);
                     }
-//                    else if (entityType.equals(AppConstants.ENTITY_TYPE_USER)) {
-//                        userDetails = this.customUserDetailsService.loadUserByUsername(username);
-//                    } else if (entityType.equals(AppConstants.ENTITY_TYPE_DEPARTMENT)) {
+                    else if (entityType.equals(AppConstants.ENTITY_TYPE_ADMIN)) {
+                        userDetails = this.adminDetailsService.loadUserByUsername(username);
+                    }
+ //                   else if (entityType.equals(AppConstants.ENTITY_TYPE_DEPARTMENT)) {
 //                        userDetails = this.departmentDetailsService.loadUserByUsername(username);
 //                    }
                     if (userDetails == null) {

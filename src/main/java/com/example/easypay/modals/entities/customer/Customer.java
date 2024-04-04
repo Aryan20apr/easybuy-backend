@@ -28,8 +28,10 @@ public class Customer {
     @Column(name = "customer_token", nullable = false, unique = true)
     private String customerToken;
 
+    @Column(name = "name",nullable = false)
     private String name;
 
+    @Column(name = "mobile",nullable = false)
     private String mobile;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
@@ -41,8 +43,10 @@ public class Customer {
     @JoinTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<CustomerRole> roles=new HashSet<>();
 
+    @Column(name = "email",nullable = false,unique = true)
     private String email;
 
+    @Column(name = "password",nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

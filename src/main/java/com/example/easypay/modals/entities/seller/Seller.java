@@ -3,6 +3,7 @@ package com.example.easypay.modals.entities.seller;
 
 
 import com.example.easypay.modals.entities.customer.Address;
+import com.example.easypay.modals.entities.product.Product;
 import com.example.easypay.modals.enums.Verification;
 import com.example.easypay.modals.entities.seller.SellerRole;
 import jakarta.persistence.*;
@@ -33,6 +34,7 @@ public class Seller {
     @Column(name = "seller_token", nullable = false, unique = true)
     private String sellerToken;
 
+    @Column(name = "companyName",nullable = false,unique = true)
     private String companyName;
 
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
@@ -42,8 +44,10 @@ public class Seller {
     @JoinTable(name = "seller_roles", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "seller_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
    private Set<SellerRole> roles=new HashSet<SellerRole>();
 
+    @Column(name = "email",nullable = false, unique = true)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
 
@@ -52,6 +56,9 @@ public class Seller {
 
     @Enumerated(EnumType.STRING)
     private Verification verificationStatus;
+
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
+    private Set<Product> products;
 
     @CreatedDate
     @CreationTimestamp

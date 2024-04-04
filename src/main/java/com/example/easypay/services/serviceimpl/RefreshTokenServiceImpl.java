@@ -1,10 +1,13 @@
 package com.example.easypay.services.serviceimpl;
 
+import com.example.easypay.modals.entities.admins.Admin;
 import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.entities.seller.Seller;
+import com.example.easypay.modals.securitymodals.AdminRefreshToken;
 import com.example.easypay.modals.securitymodals.CustomerRefreshToken;
 import com.example.easypay.modals.securitymodals.RefreshToken;
 import com.example.easypay.modals.securitymodals.SellerRefreshToken;
+import com.example.easypay.repository.admin.AdminRepository;
 import com.example.easypay.repository.customer.CustomerRepository;
 import com.example.easypay.repository.RefreshTokenRepository;
 import com.example.easypay.repository.seller.SellerRepository;
@@ -30,6 +33,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final CustomerRepository customerRepository;
     private final SellerRepository sellerRepository;
+    private final AdminRepository adminRepository;
     private RefreshTokenRepository refreshTokenRepository;
 
     @Override
@@ -37,9 +41,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         if (entityType.equals(AppConstants.ENTITY_TYPE_SELLER)) {
             return getSellerRefreshToken(username);
         }
-//        else if (entityType.equals(AppConstants.ENTITY_TYPE_USER)) {
-//            return getUserRefreshToken(username);
-//        }
+        else if (entityType.equals(AppConstants.ENTITY_TYPE_ADMIN)) {
+            return getAdminRefreshToken(username);
+        }
         else if (entityType.equals(AppConstants.ENTITY_TYPE_CUSTOMER)) {
             return getCustomerRefreshToken(username);
         }
@@ -95,6 +99,25 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         }
 
     }
+    private RefreshToken getAdminRefreshToken(String username) {
+        Admin admin = this.adminRepository.findByEmail(username).orElseThrow(() -> new ApiException(("User with email: " + username + " does not exist")));
+        Optional<RefreshToken> refreshTokenOptional = this.refreshTokenRepository.findByTypeAndId(AppConstants.ENTITY_TYPE_ADMIN, admin.getId());
+        if (refreshTokenOptional.isPresent()) {
+            RefreshToken refreshToken = refreshTokenOptional.get();
+            refreshToken.setExpiresAt(Instant.now().plusMillis(AppConstants.REFRESH_TOKEN_EXPIRATION_TIME));
+            refreshToken = refreshTokenRepository.save(refreshToken);
+            return refreshToken;
+        } else {
+            AdminRefreshToken adminRefreshToken = new AdminRefreshToken();
+            adminRefreshToken.setAdmin(this.adminRepository.findByEmail(username).orElseThrow(() -> new ApiException("User with username: " + username + " does not exist")));
+            adminRefreshToken.setExpiresAt(Instant.now().plusMillis(AppConstants.REFRESH_TOKEN_EXPIRATION_TIME));
+            adminRefreshToken.setRefreshToken(UUID.randomUUID().toString());
+            adminRefreshToken = refreshTokenRepository.save(adminRefreshToken);
+            return adminRefreshToken;
+        }
+
+    }
+
 }
 
 
