@@ -76,8 +76,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public String getConsumerToken(String email) {
-        return null;
+    public String getAdminToken(String email) {
+        return adminRepository.findTokenByEmail(email);
     }
 
     @Override

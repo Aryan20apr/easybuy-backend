@@ -14,7 +14,7 @@ public interface AdminService {
 
     public String login(HttpServletResponse httpServletResponse);
 
-    public String getConsumerToken(String email);
+    public String getAdminToken(String email);
 
     public AdminDetailsProjection getAdminDetails(String token);
 

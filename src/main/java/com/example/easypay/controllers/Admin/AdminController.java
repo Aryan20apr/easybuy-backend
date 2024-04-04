@@ -54,7 +54,7 @@ public class AdminController {
         if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated())
         {
             String username=(String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String token=adminService.getConsumerToken(username);
+            String token=adminService.getAdminToken(username);
             String accessToken= JwtUtils.generateToken(username, AppConstants.ENTITY_TYPE_ADMIN);
             CookieUtils.create(httpServletResponse, accessTokenCookieName, accessToken, false, -1, "localhost");
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(username, AppConstants.ENTITY_TYPE_ADMIN);

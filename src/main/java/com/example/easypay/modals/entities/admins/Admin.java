@@ -54,11 +54,11 @@ public class Admin {
         }
     }
 
-    public void addRole(AdminRole role)
+    public void addCategory(Category category)
     {
 
-        this.roles.add(role);
-        role.getAdmins().add(this);
+        this.categories.add(category);
+        category.setCreatedBy(this);
     }
 
     private void removeRole(AdminRole role)
@@ -66,6 +66,15 @@ public class Admin {
         this.roles.remove(role);
         role.getAdmins().remove(this);
     }
+
+    public void addRole(AdminRole role)
+    {
+
+        this.roles.add(role);
+        role.getAdmins().add(this);
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

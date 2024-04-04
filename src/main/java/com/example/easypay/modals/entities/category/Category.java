@@ -3,8 +3,7 @@ package com.example.easypay.modals.entities.category;
 import com.example.easypay.modals.entities.admins.Admin;
 import com.example.easypay.modals.entities.product.Product;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +18,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "category")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
