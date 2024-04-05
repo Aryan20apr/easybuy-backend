@@ -1,6 +1,7 @@
 package com.example.easypay.services.serviceimpl.category;
 
 import com.example.easypay.modals.dtos.category.CategoryDto;
+import com.example.easypay.modals.dtos.projections.CategoryProjection;
 import com.example.easypay.modals.entities.admins.Admin;
 import com.example.easypay.modals.entities.category.Category;
 import com.example.easypay.repository.admin.AdminRepository;
@@ -12,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -75,5 +78,11 @@ public class CategoryServiceImpl implements CategoryService {
         return true;
 
 
+    }
+
+    @Override
+    public List<CategoryProjection> getAllCategories()
+    {
+        return categoryRepository.getAllCategories();
     }
 }
