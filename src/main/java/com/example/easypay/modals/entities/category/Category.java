@@ -49,5 +49,10 @@ public class Category {
     private Date updatedAt;
 
 
+   public void addProduct(Product product){
+
+        this.addProduct(product);
+        product.setCategory(this);
+    }
 
 }

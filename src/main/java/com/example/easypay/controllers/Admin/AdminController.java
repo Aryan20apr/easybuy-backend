@@ -3,7 +3,7 @@ package com.example.easypay.controllers.Admin;
 import com.example.easypay.config.security.utils.JwtUtils;
 import com.example.easypay.modals.dtos.admindtos.AdminDto;
 
-import com.example.easypay.modals.dtos.projections.AdminDetailsProjection;
+import com.example.easypay.modals.projections.AdminDetailsProjection;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.modals.dtos.shared.LoginResponseDto;
 import com.example.easypay.modals.dtos.shared.RefreshTokenDto;

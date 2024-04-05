@@ -90,6 +90,12 @@ public class Seller {
 
     }
 
+    public void addProduct(Product product)
+    {
+        this.products.add(product);
+        product.setSeller(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

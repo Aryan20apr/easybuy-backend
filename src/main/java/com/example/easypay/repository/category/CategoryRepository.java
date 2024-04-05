@@ -1,6 +1,6 @@
 package com.example.easypay.repository.category;
 
-import com.example.easypay.modals.dtos.projections.CategoryProjection;
+import com.example.easypay.modals.projections.CategoryProjection;
 import com.example.easypay.modals.entities.category.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

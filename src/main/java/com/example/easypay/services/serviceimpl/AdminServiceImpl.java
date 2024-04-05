@@ -1,7 +1,7 @@
 package com.example.easypay.services.serviceimpl;
 
 import com.example.easypay.modals.dtos.admindtos.AdminDto;
-import com.example.easypay.modals.dtos.projections.AdminDetailsProjection;
+import com.example.easypay.modals.projections.AdminDetailsProjection;
 import com.example.easypay.modals.dtos.shared.NewPasswordDto;
 import com.example.easypay.modals.dtos.shared.ResetPasswordDto;
 import com.example.easypay.modals.entities.admins.Admin;

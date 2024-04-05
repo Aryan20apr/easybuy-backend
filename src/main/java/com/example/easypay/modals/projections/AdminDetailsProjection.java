@@ -1,4 +1,4 @@
-package com.example.easypay.modals.dtos.projections;
+package com.example.easypay.modals.projections;
 
 public interface AdminDetailsProjection {
 

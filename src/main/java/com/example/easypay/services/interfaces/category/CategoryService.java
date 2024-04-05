@@ -1,8 +1,7 @@
-package com.example.easypay.services.interfaces.product;
+package com.example.easypay.services.interfaces.category;
 
 import com.example.easypay.modals.dtos.category.CategoryDto;
-import com.example.easypay.modals.dtos.projections.CategoryProjection;
-import com.example.easypay.modals.entities.category.Category;
+import com.example.easypay.modals.projections.CategoryProjection;
 
 import java.util.List;
 

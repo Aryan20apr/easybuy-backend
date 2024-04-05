@@ -1,19 +1,18 @@
 package com.example.easypay.services.serviceimpl.category;
 
 import com.example.easypay.modals.dtos.category.CategoryDto;
-import com.example.easypay.modals.dtos.projections.CategoryProjection;
+import com.example.easypay.modals.projections.CategoryProjection;
 import com.example.easypay.modals.entities.admins.Admin;
 import com.example.easypay.modals.entities.category.Category;
 import com.example.easypay.repository.admin.AdminRepository;
 import com.example.easypay.repository.category.CategoryRepository;
-import com.example.easypay.services.interfaces.product.CategoryService;
+import com.example.easypay.services.interfaces.category.CategoryService;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

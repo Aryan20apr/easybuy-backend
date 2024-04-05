@@ -2,8 +2,7 @@ package com.example.easypay.controllers.Seller;
 
 import com.example.easypay.config.security.utils.JwtUtils;
 
-import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
-import com.example.easypay.modals.dtos.projections.SellerDetailsProjection;
+import com.example.easypay.modals.projections.SellerDetailsProjection;
 import com.example.easypay.modals.dtos.sellerDto.SellerDto;
 import com.example.easypay.modals.dtos.shared.ApiResponse;
 import com.example.easypay.modals.dtos.shared.LoginResponseDto;

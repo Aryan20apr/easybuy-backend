@@ -1,8 +1,6 @@
 package com.example.easypay.repository.seller;
 
-import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
-import com.example.easypay.modals.dtos.projections.SellerDetailsProjection;
-import com.example.easypay.modals.entities.customer.Customer;
+import com.example.easypay.modals.projections.SellerDetailsProjection;
 import com.example.easypay.modals.entities.seller.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

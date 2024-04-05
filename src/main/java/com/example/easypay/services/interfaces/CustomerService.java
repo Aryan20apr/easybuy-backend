@@ -1,7 +1,7 @@
 package com.example.easypay.services.interfaces;
 
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
-import com.example.easypay.modals.dtos.projections.CustomerDetailsProjection;
+import com.example.easypay.modals.projections.CustomerDetailsProjection;
 import com.example.easypay.modals.dtos.shared.NewPasswordDto;
 import com.example.easypay.modals.dtos.shared.ResetPasswordDto;
 import jakarta.servlet.http.HttpServletResponse;

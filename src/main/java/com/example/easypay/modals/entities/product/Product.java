@@ -1,26 +1,26 @@
 package com.example.easypay.modals.entities.product;
 
+import com.example.easypay.modals.dtos.product.ProductImages;
 import com.example.easypay.modals.entities.category.Category;
 import com.example.easypay.modals.entities.order.OrderItems;
 import com.example.easypay.modals.entities.seller.Seller;
 import com.example.easypay.modals.enums.ProductAvailibility;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "product")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +29,9 @@ public class Product {
 
     private String productName;
 
-    private String count;
+    private int count;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE})
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -40,7 +40,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductAvailibility availibility;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE})
     @JoinColumn(name="seller_id")
     private Seller seller;
 
@@ -53,6 +53,10 @@ public class Product {
     private int orderLimit;
 
     private String counntryOfOrigin;
+
+
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+    private List<ProductImages> images=new ArrayList<>();
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
 //            CascadeType.PERSIST, CascadeType.DETACH,CascadeType.REMOVE})
