@@ -1,6 +1,7 @@
 package com.example.easypay.modals.entities.product;
 
 import com.example.easypay.modals.entities.category.Category;
+import com.example.easypay.modals.entities.order.OrderItems;
 import com.example.easypay.modals.entities.seller.Seller;
 import com.example.easypay.modals.enums.ProductAvailibility;
 import jakarta.persistence.*;
@@ -12,6 +13,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -21,7 +24,7 @@ import java.util.UUID;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "product_id", nullable = false)
     private Long id;
 
     private String productName;
@@ -50,6 +53,10 @@ public class Product {
     private int orderLimit;
 
     private String counntryOfOrigin;
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
+//            CascadeType.PERSIST, CascadeType.DETACH,CascadeType.REMOVE})
+//    private Set<OrderItems> orderItems=new HashSet<>();
 
     @CreatedDate
     @CreationTimestamp

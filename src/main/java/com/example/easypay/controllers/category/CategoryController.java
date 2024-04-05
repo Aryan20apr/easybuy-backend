@@ -7,6 +7,7 @@ import com.example.easypay.services.interfaces.product.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,19 +19,22 @@ import java.util.List;
 public class CategoryController {
 
     private CategoryService categoryService ;
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<ApiResponse<String>> createCtageory(@RequestBody CategoryDto categoryDto)
+    public ResponseEntity<ApiResponse<String>> createCategory(@RequestBody CategoryDto categoryDto)
     {
         categoryService.createCategory(categoryDto);
         return new ResponseEntity<>(new ApiResponse<>("Category added succsessfully"), HttpStatus.CREATED);
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping
     public ResponseEntity<ApiResponse<String>> updateCtageory(@RequestBody CategoryDto categoryDto)
     {
         categoryService.editCategory(categoryDto);
         return new ResponseEntity<>(new ApiResponse<>("Category updated !"), HttpStatus.OK);
     }
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping
     public ResponseEntity<ApiResponse<String>> removeCateory(@RequestParam Long id)
     {
