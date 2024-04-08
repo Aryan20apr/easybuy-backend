@@ -27,6 +27,8 @@ public class OrderDetails {
     private Set<OrderItems> orderItems=new HashSet<>();
 
 
+    private Long totalAmount;
+
     private Long totalDiscount;
 
     private String orderToken;

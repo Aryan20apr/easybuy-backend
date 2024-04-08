@@ -1,10 +1,7 @@
 package com.example.easypay.modals.dtos.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +15,7 @@ import java.util.Date;
 @Table(name = "product_images")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ProductImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +33,7 @@ public class ProductImages {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+
 
 }

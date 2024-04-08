@@ -1,5 +1,6 @@
 package com.example.easypay.modals.entities.customer;
 
+import com.example.easypay.modals.entities.cart.Cart;
 import com.example.easypay.modals.enums.Gender;
 import com.example.easypay.modals.enums.Verification;
 import jakarta.persistence.*;
@@ -55,6 +56,9 @@ public class Customer {
 
     @Enumerated(EnumType.STRING)
     private Verification verificationStatus;
+
+    @OneToOne(mappedBy = "customer")
+    private Cart cart;
 
     @CreatedDate
     @CreationTimestamp

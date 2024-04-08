@@ -3,53 +3,80 @@ package com.example.easypay.repository.product;
 import com.example.easypay.modals.entities.product.Product;
 import com.example.easypay.modals.projections.ProductProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import com.example.easypay.modals.enums.ProductAvailibility;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
 
+
     @Query("""
-            SELECT  p.productName,
-                    p.productToken,
-                    p.markedPrice,
-                    p.displayPrice,
-                    p.discountPercent,
-                    p.orderLimit,
-                    p.counntryOfOrigin,
-                    p.seller.companyName,
-                    p.images
-             from Product p  WHERE p.productToken=?1
+        SELECT COUNT(*) FROM Product p WHERE p.productToken = ?1
+
+""")
+    public Integer checkIfProductExists(String token);
+
+
+    @Query("""
+            SELECT 
+            p.id as productId, 
+            p.productName as productName,
+                    p.productToken as productToken,
+                    p.markedPrice as markedPrice,
+                    p.displayPrice as displayPrice,
+                    p.discountPercent as discountPercent,
+                    p.orderLimit as orderLimit,
+                    p.countryOfOrigin as countryOfOrigin,
+                    p.seller.companyName as companyName,
+                    p.seller.sellerToken as sellerToken
+                    
+                                                
+             from Product p  WHERE p.productToken= ?1
             """)
     public ProductProjection getProductByToken(String token);
 
+    public Product findByProductToken(String token);
+
 
 
     @Query("""
-            SELECT  p.productName,
-                    p.productToken,
-                    p.markedPrice,
-                    p.displayPrice,
-                    p.discountPercent,
-                    p.orderLimit,
-                    p.counntryOfOrigin,
-                    p.seller.companyName
-             from Product p  WHERE p.availibility="AVAILABLE" AND p.count>0 AND p.category.id=?1
+            SELECT
+            p.id as productId,   
+            p.productName as productName,
+                    p.productToken as productToken,
+                    p.markedPrice as markedPrice,
+                    p.displayPrice as displayPrice,
+                    p.discountPercent as discountPercent,
+                    p.orderLimit as orderLimit,
+                    p.countryOfOrigin as countryOfOrigin,
+                    p.seller.companyName as companyName,
+                    p.seller.sellerToken as sellerToken
+                    
+             from Product p  WHERE  p.count>0 AND p.category.id=?1
             """)
     public ProductProjection getProductsByCategory(Long id);
 
     @Query("""
-            SELECT  p.productName,
-                    p.productToken,
-                    p.markedPrice,
-                    p.displayPrice,
-                    p.discountPercent,
-                    p.orderLimit,
-                    p.counntryOfOrigin,
-                    p.seller.companyName
-             from Product p  WHERE p.availibility="AVAILABLE" AND p.count>0 AND p.category.id=?1
+            SELECT 
+            p.id as productId, 
+            p.productName as productName,
+                    p.productToken as productToken,
+                    p.markedPrice as markedPrice,
+                    p.displayPrice as displayPrice,
+                    p.discountPercent as discountPercent,
+                    p.orderLimit as orderLimit,
+                    p.countryOfOrigin as countryOfOrigin,
+                    p.seller.companyName as companyName,
+                    p.seller.sellerToken as sellerToken
+             from Product p  WHERE p.count>0 AND p.category.id=?1
             """)
-    public List<ProductProjection> findAllProduct();
+    public List<ProductProjection> findAllProduct(Long id);
+
+    @Modifying
+    @Query("""
+DELETE FROM Product p WHERE p.productToken=?1
+""")
+    public void removeByToken(String token);
 
 }

@@ -1,6 +1,7 @@
 package com.example.easypay.services.serviceimpl.product;
 
 import com.example.easypay.modals.dtos.product.ProductDto;
+import com.example.easypay.modals.dtos.product.ProductImages;
 import com.example.easypay.modals.entities.category.Category;
 import com.example.easypay.modals.entities.product.Product;
 import com.example.easypay.modals.entities.seller.Seller;
@@ -13,14 +14,17 @@ import com.example.easypay.services.interfaces.product.ProductService;
 import com.example.easypay.utils.exceptionUtil.ApiException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @AllArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
 
@@ -28,6 +32,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private SellerRepository sellerRepository;
     private CategoryRepository categoryRepository;
+
+
+    public void findProductById(Long id)
+    {
+    Optional<Product> product= productRepository.findById(id);
+        System.out.println(product);
+    }
     @Override
     public String createProduct(ProductDto productDto) {
 
@@ -40,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
                 .productName(productDto.getProductName())
                 .count(productDto.getCount())
                 .availibility(productDto.getAvailibility()? ProductAvailibility.AVAILABLE:ProductAvailibility.OUT_OF_STOCK)
-                .counntryOfOrigin(productDto.getCounntryOfOrigin())
+                .countryOfOrigin(productDto.getCounntryOfOrigin())
                 .displayPrice(productDto.getDisplayPrice())
                 .markedPrice(productDto.getMarkedPrice())
                 .discountPercent(productDto.getDiscountPercent())
@@ -63,8 +74,21 @@ public class ProductServiceImpl implements ProductService {
         {
             category.get().addProduct(product);
         }
-        Product savedproduct=productRepository.save(product);
 
+
+
+       List<ProductImages> productImages= productDto
+               .getImageURLs()
+               .stream()
+               .map(url-> ProductImages.builder().imageUrl(url).build())
+               .collect(Collectors.toList());
+        //product.setImages(productImages);
+        //product.addImages(productImages);
+
+
+        Product savedproduct=productRepository.save(product);
+        product.setImages(productImages);
+        productRepository.save(product);
         return savedproduct.getProductToken();
 
 
@@ -72,23 +96,44 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String updateProduct(ProductDto productDto) {
-        return null;
+    public void updateProduct(ProductDto productDto) {
+        Product product=productRepository.findByProductToken(productDto.getSellerToken());
+        product.setProductName(productDto.getProductName());
+        product.setAvailibility(productDto.getAvailibility()?ProductAvailibility.AVAILABLE:ProductAvailibility.OUT_OF_STOCK);
+        product.setCountryOfOrigin(productDto.getCounntryOfOrigin());
+        product.setDiscountPercent(productDto.getDiscountPercent());
+        product.setDisplayPrice(productDto.getDisplayPrice());
+        product.setMarkedPrice(productDto.getMarkedPrice());
+        product.setCount(productDto.getCount());
+        product.setOrderLimit(productDto.getOrderLimit());
+
+        productRepository.save(product);
     }
 
     @Override
     public ProductProjection getProductByToken(String token) {
+        log.info("Count of product with productTojken obtained is: "+productRepository.checkIfProductExists(token));
         ProductProjection product= productRepository.getProductByToken(token);
+
+        log.info("Prodct obtained is : "+product.getProductName());
+
         return product;
     }
 
     @Override
-    public List<ProductProjection> getAllProducts() {
-        return productRepository.findAllProduct();
+    public List<ProductProjection> getAllProductsByCategory(Long id) {
+        return productRepository.findAllProduct(id);
     }
 
     @Override
     public void removeProduct(String token) {
+        try {
+            productRepository.removeByToken(token);
+        } catch (Exception e) {
+           e.printStackTrace();
+            throw new ApiException(e.getMessage());
+        }
+
 
     }
 }

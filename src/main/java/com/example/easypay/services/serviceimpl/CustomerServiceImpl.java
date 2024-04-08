@@ -1,6 +1,7 @@
 package com.example.easypay.services.serviceimpl;
 
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
+import com.example.easypay.modals.entities.cart.Cart;
 import com.example.easypay.modals.projections.CustomerDetailsProjection;
 import com.example.easypay.modals.dtos.shared.NewPasswordDto;
 import com.example.easypay.modals.dtos.shared.ResetPasswordDto;
@@ -8,6 +9,7 @@ import com.example.easypay.modals.entities.customer.Address;
 import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.entities.customer.CustomerRole;
 import com.example.easypay.modals.enums.Verification;
+import com.example.easypay.repository.cart.CartRepository;
 import com.example.easypay.repository.customer.CustomerRepository;
 import com.example.easypay.repository.customer.CustomerRoleRespository;
 import com.example.easypay.services.interfaces.CustomerRoleService;
@@ -33,6 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerRoleService customerRoleService;
+    private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
@@ -72,8 +75,17 @@ public class CustomerServiceImpl implements CustomerService {
                 Address customerAddress = this.modelMapper.map(customerDto.getAddress(), Address.class);
                 customer.addAddress(customerAddress);
             }
+
+            Cart cart= Cart.builder().build();
+            cartRepository.save(cart);
+//            customer.setCart(cart);
+
+            //customerRepository.save(customer);
+            //log.info(customer.toString());
+            //log.info("Customer saved id:"+customer.getCustomerId());
+            cart.setCustomer(customer);
+            cartRepository.save(cart);
             customerRepository.save(customer);
-            log.info(customer.toString());
             return customer.getCustomerToken();
         }
     }

@@ -5,23 +5,26 @@ import java.util.List;
 
 public interface ProductProjection {
 
-    String getProductName();
+    public Long getProductId();
 
-    String getProductToken();
+   public String getProductName();
 
-    int getMarkedPrice();
+   public String getProductToken();
 
-    int getDisplayPrice();
+   public Integer getMarkedPrice();
 
-    int getDiscountPercent();
+   public Integer getDisplayPrice();
 
-    int getOrderLimit();
+   public  Double getDiscountPercent();
 
-    String getCounntryOfOrigin();
+    Integer getOrderLimit();
+
+    String getCountryOfOrigin();
 
     String getCompanyName();
 
-    List<String> getImages();
+    String getSellerToken();
+    
 
 
 }

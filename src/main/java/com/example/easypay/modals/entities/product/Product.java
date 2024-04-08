@@ -52,10 +52,10 @@ public class Product {
 
     private int orderLimit;
 
-    private String counntryOfOrigin;
+    private String countryOfOrigin;
 
 
-    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH})
     private List<ProductImages> images=new ArrayList<>();
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
@@ -79,4 +79,41 @@ public class Product {
         }
     }
 
+    public void addImages(List<ProductImages> productImages)
+    {
+
+        images.addAll(productImages);
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product product)) return false;
+        return getCount() == product.getCount() && getMarkedPrice() == product.getMarkedPrice() && getDisplayPrice() == product.getDisplayPrice() && Double.compare(getDiscountPercent(), product.getDiscountPercent()) == 0 && getOrderLimit() == product.getOrderLimit() && Objects.equals(getId(), product.getId()) && Objects.equals(getProductName(), product.getProductName()) && Objects.equals(getCategory(), product.getCategory()) && Objects.equals(getProductToken(), product.getProductToken()) && getAvailibility() == product.getAvailibility() && Objects.equals(getSeller(), product.getSeller()) && Objects.equals(getCountryOfOrigin(), product.getCountryOfOrigin()) && Objects.equals(getImages(), product.getImages()) && Objects.equals(getCreatedAt(), product.getCreatedAt()) && Objects.equals(getUpdatedAt(), product.getUpdatedAt());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getProductName(), getCount(), getCategory(), getProductToken(), getAvailibility(), getSeller(), getMarkedPrice(), getDisplayPrice(), getDiscountPercent(), getOrderLimit(), getCountryOfOrigin(), getImages(), getCreatedAt(), getUpdatedAt());
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", count=" + count +
+                ", category=" + category +
+                ", productToken='" + productToken + '\'' +
+                ", availability=" + availibility +
+                ", seller=" + seller +
+                ", markedPrice=" + markedPrice +
+                ", displayPrice=" + displayPrice +
+                ", discountPercent=" + discountPercent +
+                ", orderLimit=" + orderLimit +
+                ", countryOfOrigin='" + countryOfOrigin + '\'' +
+                ", images=" + images +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

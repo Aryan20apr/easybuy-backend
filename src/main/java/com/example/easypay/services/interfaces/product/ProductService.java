@@ -8,12 +8,13 @@ import java.util.List;
 public interface ProductService {
 
 
+    public void findProductById(Long id);
     public String createProduct(ProductDto productDto);
 
-    public String updateProduct(ProductDto productDto);
+    public void updateProduct(ProductDto productDto);
 
 
-    public List<ProductProjection> getAllProducts();
+    public List<ProductProjection> getAllProductsByCategory(Long id);
 
     public void removeProduct(String token);
 

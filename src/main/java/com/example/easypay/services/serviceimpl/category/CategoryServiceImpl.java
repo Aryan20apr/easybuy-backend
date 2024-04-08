@@ -81,6 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryProjection> getAllCategories()
+
     {
         return categoryRepository.getAllCategories();
     }

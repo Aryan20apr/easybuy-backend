@@ -1,6 +1,6 @@
-package com.example.easypay.modals.entities.category;
+package com.example.easypay.modals.entities.cart;
 
-import com.example.easypay.modals.entities.admins.Admin;
+import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.entities.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,31 +12,32 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "category")
-@Builder
+@Table(name = "cart")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+@Builder
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
+    @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
+    @PrimaryKeyJoinColumn(name = "customer_id",referencedColumnName = "customer_id")
+    private Customer customer;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
-    private Set<Product> products=new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "createdBy")
-    private Admin createdBy;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"))
+    private Set<Product> cartItems=new HashSet<>();
 
-    private boolean enabled;
+    private int cartTotal;
+
+
 
     @CreatedDate
     @CreationTimestamp
@@ -48,11 +49,12 @@ public class Category {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-
-   public void addProduct(Product product){
-
-        this.products.add(product);
-        product.setCategory(this);
+    public void addProduct(Product product)
+    {
+        this.cartItems.add(product);
     }
+
+
+
 
 }
