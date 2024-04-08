@@ -5,6 +5,8 @@ import com.example.easypay.modals.projections.ProductProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
@@ -78,5 +80,22 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 DELETE FROM Product p WHERE p.productToken=?1
 """)
     public void removeByToken(String token);
+
+    @Query("""
+            SELECT 
+            p.id as productId, 
+            p.productName as productName, 
+            p.productToken as productToken, 
+            p.markedPrice as markedPrice, 
+            p.displayPrice as displayPrice, 
+            p.discountPercent as discountPercent, 
+            p.orderLimit as orderLimit, 
+            p.countryOfOrigin as countryOfOrigin, 
+            s.companyName as companyName, 
+            s.sellerToken as sellerToken 
+            FROM Cart c JOIN c.cartItems p JOIN p.seller s WHERE c.id = :cartId """)
+    List<ProductProjection> findProductsByCartId(@Param("cartId") Long cartId);
+
+
 
 }

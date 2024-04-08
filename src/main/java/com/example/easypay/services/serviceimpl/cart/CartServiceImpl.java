@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,4 +56,10 @@ public class CartServiceImpl implements CartService {
         cart.get().getCartItems().remove(product);
         cartRepository.save(cart.get());
     }
+
+//    @Override
+//    public List<ProductProjection> getCartItems(Long cartId) {
+//
+//        cartRepository.findById(cartId);
+//    }
 }

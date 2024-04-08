@@ -24,7 +24,5 @@ public interface ProductProjection {
     String getCompanyName();
 
     String getSellerToken();
-    
-
 
 }

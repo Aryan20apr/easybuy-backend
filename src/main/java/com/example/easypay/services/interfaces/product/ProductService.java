@@ -20,4 +20,6 @@ public interface ProductService {
 
     public ProductProjection getProductByToken(String token);
 
+    public List<ProductProjection> getCartProducts(String customerToken);
+
 }

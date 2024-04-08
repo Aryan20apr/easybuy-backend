@@ -7,7 +7,9 @@ import com.example.easypay.modals.entities.product.Product;
 import com.example.easypay.modals.entities.seller.Seller;
 import com.example.easypay.modals.enums.ProductAvailibility;
 import com.example.easypay.modals.projections.ProductProjection;
+import com.example.easypay.repository.cart.CartRepository;
 import com.example.easypay.repository.category.CategoryRepository;
+import com.example.easypay.repository.customer.CustomerRepository;
 import com.example.easypay.repository.product.ProductRepository;
 import com.example.easypay.repository.seller.SellerRepository;
 import com.example.easypay.services.interfaces.product.ProductService;
@@ -32,6 +34,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private SellerRepository sellerRepository;
     private CategoryRepository categoryRepository;
+    private CustomerRepository customerRepository;
+    private CartRepository cartRepository;
 
 
     public void findProductById(Long id)
@@ -119,6 +123,19 @@ public class ProductServiceImpl implements ProductService {
 
         return product;
     }
+
+    @Override
+    public List<ProductProjection> getCartProducts(String customerToken) {
+
+        Long customerCartId= customerRepository.findCustomerCartId(customerToken);
+
+
+
+        List<ProductProjection> cartItems= productRepository.findProductsByCartId(customerCartId);
+        return cartItems;
+
+
+  }
 
     @Override
     public List<ProductProjection> getAllProductsByCategory(Long id) {
