@@ -1,4 +1,4 @@
-package com.example.easypay.secrets;
+package com.example.easypay.config.email;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

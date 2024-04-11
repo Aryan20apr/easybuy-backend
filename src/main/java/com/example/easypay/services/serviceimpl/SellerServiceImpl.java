@@ -8,7 +8,7 @@ import com.example.easypay.modals.dtos.shared.ResetPasswordDto;
 import com.example.easypay.modals.entities.seller.ContactDetail;
 import com.example.easypay.modals.entities.seller.Seller;
 import com.example.easypay.modals.entities.seller.SellerRole;
-import com.example.easypay.modals.enums.Verification;
+import com.example.easypay.modals.enums.UserVerification;
 
 import com.example.easypay.repository.seller.SellerRepository;
 import com.example.easypay.repository.seller.SellerRoleRepository;
@@ -69,7 +69,7 @@ public class SellerServiceImpl implements SellerService {
             seller.setPassword(passwordEncoder.encode(sellerDto.getPassword()));
             seller.setRoles(roles);
 
-            seller.setVerificationStatus(Verification.UNVERIFIED);
+            seller.setUserVerificationStatus(UserVerification.UNVERIFIED);
             //Set<ContactDetail> contacts=new HashSet<>();
             if (sellerDto.getContactDetails() != null) {
                 //ContactDetail contactDetails = this.modelMapper.map(sellerDto.getContactDetails(), ContactDetail.class);

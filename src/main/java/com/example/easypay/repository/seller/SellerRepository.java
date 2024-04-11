@@ -28,7 +28,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
             s.sellerToken as sellerToken,
             s.companyName as company,
             s.email as email,
-            s.verificationStatus as verificationStatus
+            s.userVerificationStatus as verificationStatus
             FROM
             Seller s WHERE s.sellerToken = ?1
             """)

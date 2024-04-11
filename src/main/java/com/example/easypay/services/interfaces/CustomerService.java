@@ -17,13 +17,13 @@ public interface CustomerService {
 
     public CustomerDetailsProjection getCustomerDetails(String token);
 
-    public void sendVerificationEmail();
+    public void sendVerificationEmail(String email);
 
-    public void verifyEmail();
+    public void verifyEmail(String email, Integer otp);
 
-    public void sendOtp();
+    public void sendOtp(Long phone);
 
-    public void verifyOtp();
+    public void verifyOtp(Long phone, Integer otp);
 
     String sendPasswordResetOTP (String email, Long phone);
 

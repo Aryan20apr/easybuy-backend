@@ -1,14 +1,10 @@
 package com.example.easypay.modals.dtos.sellerDto;
 
-import com.example.easypay.modals.entities.seller.ContactDetail;
-import com.example.easypay.modals.entities.seller.SellerRole;
-import com.example.easypay.modals.enums.Verification;
+import com.example.easypay.modals.enums.UserVerification;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static com.example.easypay.utils.AppConstants.ENTITY_TYPE_SELLER;
 
 @Setter
 @Getter
@@ -27,6 +23,6 @@ public class SellerDto {
 
     private Set<String> roles;
 
-    private Verification verificationStatus;
+    private UserVerification userVerificationStatus;
 
 }

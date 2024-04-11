@@ -40,14 +40,15 @@ public class AppConstants {
             "/easybuy/api/v1/seller/register",
             "/easybuy/api/v1/seller/refresh-token",
             "/easybuy/api/v1/admin/login",
-            "/easybuy/api/v1/admin/register",
             "/easybuy/api/v1/admin/refresh-token",
-            "/api/v1/consumer/email/otp",
-            "/api/v1/consumer/email/verify",
-            "/api/v1/consumer/phone/otp",
-            "/api/v1/consumer/phone/verify",
-            "/api/v1/consumer/password/forget",
-            "/api/v1/consumer/password/change",
+            "/easybuy/api/v1/admin/register",
+            "/easybuy/api/v1/upload/images",
+            "/easybuy/api/v1/customer/email/otp",
+            "/easybuy/api/v1/customer/email/verify",
+            "/easybuy/api/v1/customerr/phone/otp",
+            "/easybuy/api/v1/customer/phone/verify",
+            "/easybuy/api/v1/customer/password/forget",
+            "/easybuy/api/v1/customer/password/change",
     };
 
 }

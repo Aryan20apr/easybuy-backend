@@ -27,7 +27,8 @@ public class Cart {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
-    @PrimaryKeyJoinColumn(name = "customer_id",referencedColumnName = "customer_id")
+//    @PrimaryKeyJoinColumn(name = "customer_id",referencedColumnName = "customer_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
 

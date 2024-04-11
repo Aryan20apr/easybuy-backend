@@ -54,8 +54,10 @@ public class Product {
 
     private String countryOfOrigin;
 
+    private String description;
 
-    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH})
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private List<ProductImages> images=new ArrayList<>();
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
@@ -72,6 +74,8 @@ public class Product {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+
+
     @PrePersist
     public void generateToken() {
         if (this.productToken == null) {
@@ -81,9 +85,10 @@ public class Product {
 
     public void addImages(List<ProductImages> productImages)
     {
-
+        System.out.println("Images is null "+(images==null));
         images.addAll(productImages);
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -36,7 +36,7 @@ SELECT c.cart.id from Customer c WHERE c.customerToken= ?1
             c.email as email,
             c.mobile as mobile,
             c.gender as gender,
-            c.verificationStatus as verificationStatus
+            c.userVerificationStatus as verificationStatus
             FROM
             Customer c WHERE c.customerToken = ?1
             """)

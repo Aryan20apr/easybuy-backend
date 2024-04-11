@@ -1,7 +1,7 @@
 package com.example.easypay.modals.dtos.cutomerdtos;
 
 import com.example.easypay.modals.enums.Gender;
-import com.example.easypay.modals.enums.Verification;
+import com.example.easypay.modals.enums.UserVerification;
 import lombok.*;
 
 import java.util.Set;
@@ -33,6 +33,6 @@ public class CustomerDto {
     private Gender gender;
 
 
-    private Verification verificationStatus;
+    private UserVerification userVerificationStatus;
 
 }

@@ -36,6 +36,7 @@ public class OrderItems {
 //    private int count;
 
     @OneToOne
+    @PrimaryKeyJoinColumn(name = "product_id",referencedColumnName = "product_id")
     private Product product;
 
     @Column(name = "order_item_count")

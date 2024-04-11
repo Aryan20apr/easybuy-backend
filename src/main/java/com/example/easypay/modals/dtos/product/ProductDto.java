@@ -36,9 +36,13 @@ public class ProductDto {
 
     private int orderLimit;
 
+    private String description;
+
     private String counntryOfOrigin;
 
     private List<String> imageURLs;
+
+
 
 
 }

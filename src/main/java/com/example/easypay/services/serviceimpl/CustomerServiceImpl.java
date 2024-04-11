@@ -1,5 +1,7 @@
 package com.example.easypay.services.serviceimpl;
 
+import com.example.easypay.config.email.EmailConfigurationProperties;
+import com.example.easypay.config.twilio.TwilioConfigurationProperties;
 import com.example.easypay.modals.dtos.cutomerdtos.CustomerDto;
 import com.example.easypay.modals.entities.cart.Cart;
 import com.example.easypay.modals.projections.CustomerDetailsProjection;
@@ -8,13 +10,20 @@ import com.example.easypay.modals.dtos.shared.ResetPasswordDto;
 import com.example.easypay.modals.entities.customer.Address;
 import com.example.easypay.modals.entities.customer.Customer;
 import com.example.easypay.modals.entities.customer.CustomerRole;
-import com.example.easypay.modals.enums.Verification;
+import com.example.easypay.modals.enums.UserVerification;
 import com.example.easypay.repository.cart.CartRepository;
 import com.example.easypay.repository.customer.CustomerRepository;
 import com.example.easypay.repository.customer.CustomerRoleRespository;
 import com.example.easypay.services.interfaces.CustomerRoleService;
 import com.example.easypay.services.interfaces.CustomerService;
+import com.example.easypay.utils.emailUtil.AccountVerificationEmailContext;
+import com.example.easypay.utils.emailUtil.MailService;
 import com.example.easypay.utils.exceptionUtil.ApiException;
+import com.example.easypay.utils.otpUtil.OtpService;
+import com.twilio.Twilio;
+import com.twilio.rest.verify.v2.service.Verification;
+import com.twilio.rest.verify.v2.service.VerificationCheck;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +48,10 @@ public class CustomerServiceImpl implements CustomerService {
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
+    private final MailService mailService;
+    private final OtpService otpService;
+    private final EmailConfigurationProperties emailConfigurationProperties;
+    private final TwilioConfigurationProperties twilioConfigurationProperties;
     @Override
     public Boolean isCustomerPresent(String email)
     {
@@ -69,8 +82,8 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setRoles(roles);
             customer.setMobile(customerDto.getMobile());
             customer.setGender(customerDto.getGender());
-            customer.setName(customer.getName());
-            customer.setVerificationStatus(Verification.UNVERIFIED);
+            customer.setName(customerDto.getName());
+            customer.setUserVerificationStatus(UserVerification.UNVERIFIED);
             if (customerDto.getAddress() != null) {
                 Address customerAddress = this.modelMapper.map(customerDto.getAddress(), Address.class);
                 customer.addAddress(customerAddress);
@@ -110,23 +123,51 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public void sendVerificationEmail() {
-
+    public void sendVerificationEmail(String email) {
+        int otp = otpService.generateOTP(email);
+        AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext(emailConfigurationProperties);
+        emailContext.init();
+        emailContext.setTo(email);
+        emailContext.setOTP(String.valueOf(otp));
+        try {
+            mailService.sendEmail(emailContext);
+        } catch (MessagingException e) {
+            log.error("Some error occurred while sending email: " + e.getMessage());
+        }
     }
 
     @Override
-    public void verifyEmail() {
-
+    public void verifyEmail(String email, Integer otp) {
+        int storedOTP = otpService.getOTP(email);
+        log.info("Stored otp: " + storedOTP + " received otp: " + otp);
+        if (storedOTP != otp) {
+            throw new ApiException("The otp is either incorrect or expired!");
+        }
+        otpService.clearOTP(email);
     }
 
     @Override
-    public void sendOtp() {
-
+    public void sendOtp(Long phone) {
+        Twilio.init(twilioConfigurationProperties.accountSid(), twilioConfigurationProperties.authToken());
+        Verification verification = Verification.creator(twilioConfigurationProperties.serviceSid(),
+                        phone.toString(),
+                        "sms")
+                .create();
+        log.info("otp sent to: {}", phone);
     }
 
     @Override
-    public void verifyOtp() {
-
+    public void verifyOtp(Long phone, Integer otp) {
+        try {
+            VerificationCheck verificationCheck = VerificationCheck.creator(
+                            twilioConfigurationProperties.serviceSid())
+                    .setTo(phone.toString())
+                    .setCode(otp.toString())
+                    .create();
+            log.info("verification status: {}", verificationCheck.getStatus());
+        } catch (Exception e) {
+            throw new ApiException("The otp is either incorrect or expired!");
+        }
     }
 
     @Override

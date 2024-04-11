@@ -56,7 +56,7 @@ public class ProductController {
     @GetMapping
     ResponseEntity<ApiResponse<ProductProjection>> getSingleProduct(@RequestParam String productToken)
     {
-         productService.findProductById(1L);
+         //productService.findProductById(1L);
 
         return new ResponseEntity<>(new ApiResponse<>(productService.getProductByToken(productToken)), HttpStatus.OK);
     }

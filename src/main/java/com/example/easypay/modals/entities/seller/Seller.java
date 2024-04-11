@@ -2,10 +2,8 @@ package com.example.easypay.modals.entities.seller;
 
 
 
-import com.example.easypay.modals.entities.customer.Address;
 import com.example.easypay.modals.entities.product.Product;
-import com.example.easypay.modals.enums.Verification;
-import com.example.easypay.modals.entities.seller.SellerRole;
+import com.example.easypay.modals.enums.UserVerification;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -55,7 +53,7 @@ public class Seller {
 
 
     @Enumerated(EnumType.STRING)
-    private Verification verificationStatus;
+    private UserVerification userVerificationStatus;
 
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     private Set<Product> products;
@@ -100,11 +98,11 @@ public class Seller {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Seller seller)) return false;
-        return Objects.equals(getSellerId(), seller.getSellerId()) && Objects.equals(getSellerToken(), seller.getSellerToken()) && Objects.equals(getCompanyName(), seller.getCompanyName()) && Objects.equals(getEmail(), seller.getEmail()) && Objects.equals(getPassword(), seller.getPassword()) && Objects.equals(getRole(), seller.getRole()) && getVerificationStatus() == seller.getVerificationStatus() && Objects.equals(getCreatedAt(), seller.getCreatedAt()) && Objects.equals(getUpdatedAt(), seller.getUpdatedAt());
+        return Objects.equals(getSellerId(), seller.getSellerId()) && Objects.equals(getSellerToken(), seller.getSellerToken()) && Objects.equals(getCompanyName(), seller.getCompanyName()) && Objects.equals(getEmail(), seller.getEmail()) && Objects.equals(getPassword(), seller.getPassword()) && Objects.equals(getRole(), seller.getRole()) && getUserVerificationStatus() == seller.getUserVerificationStatus() && Objects.equals(getCreatedAt(), seller.getCreatedAt()) && Objects.equals(getUpdatedAt(), seller.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSellerId(), getSellerToken(), getCompanyName(), getEmail(), getPassword(), getRole(), getVerificationStatus(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getSellerId(), getSellerToken(), getCompanyName(), getEmail(), getPassword(), getRole(), getUserVerificationStatus(), getCreatedAt(), getUpdatedAt());
     }
 }

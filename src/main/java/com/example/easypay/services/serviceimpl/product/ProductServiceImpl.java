@@ -60,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
                 .markedPrice(productDto.getMarkedPrice())
                 .discountPercent(productDto.getDiscountPercent())
                 .orderLimit(productDto.getOrderLimit())
+                .description(productDto.getDescription())
                 .build();
 
         if(!seller.isPresent())
@@ -91,8 +92,9 @@ public class ProductServiceImpl implements ProductService {
 
 
         Product savedproduct=productRepository.save(product);
-        product.setImages(productImages);
-        productRepository.save(product);
+        //product.setImages(productImages);
+       savedproduct.addImages(productImages);
+        productRepository.save(savedproduct);
         return savedproduct.getProductToken();
 
 

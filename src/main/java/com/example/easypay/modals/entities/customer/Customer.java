@@ -2,7 +2,8 @@ package com.example.easypay.modals.entities.customer;
 
 import com.example.easypay.modals.entities.cart.Cart;
 import com.example.easypay.modals.enums.Gender;
-import com.example.easypay.modals.enums.Verification;
+
+import com.example.easypay.modals.enums.UserVerification;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -55,7 +56,7 @@ public class Customer {
 
 
     @Enumerated(EnumType.STRING)
-    private Verification verificationStatus;
+    private UserVerification userVerificationStatus;
 
     @OneToOne(mappedBy = "customer")
     private Cart cart;
@@ -106,12 +107,12 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Customer customer)) return false;
-        return Objects.equals(getCustomerId(), customer.getCustomerId()) && Objects.equals(getCustomerToken(), customer.getCustomerToken()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getMobile(), customer.getMobile()) && Objects.equals(getAddresses(), customer.getAddresses()) && Objects.equals(getRoles(), customer.getRoles()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getPassword(), customer.getPassword()) && getGender() == customer.getGender() && getVerificationStatus() == customer.getVerificationStatus() && Objects.equals(getCreatedAt(), customer.getCreatedAt()) && Objects.equals(getUpdatedAt(), customer.getUpdatedAt());
+        return Objects.equals(getCustomerId(), customer.getCustomerId()) && Objects.equals(getCustomerToken(), customer.getCustomerToken()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getMobile(), customer.getMobile()) && Objects.equals(getAddresses(), customer.getAddresses()) && Objects.equals(getRoles(), customer.getRoles()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getPassword(), customer.getPassword()) && getGender() == customer.getGender() && getUserVerificationStatus() == customer.getUserVerificationStatus() && Objects.equals(getCreatedAt(), customer.getCreatedAt()) && Objects.equals(getUpdatedAt(), customer.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCustomerId(), getCustomerToken(), getName(), getMobile(), getAddresses(), getRoles(), getEmail(), getPassword(), getGender(), getVerificationStatus(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getCustomerId(), getCustomerToken(), getName(), getMobile(), getAddresses(), getRoles(), getEmail(), getPassword(), getGender(), getUserVerificationStatus(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
@@ -126,7 +127,7 @@ public class Customer {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", gender=" + gender +
-                ", verificationStatus=" + verificationStatus +
+                ", verificationStatus=" + userVerificationStatus +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

@@ -1,6 +1,6 @@
 package com.example.easypay.modals.enums;
 
-public enum Verification {
+public enum UserVerification {
 
     VERIFIED,
     UNVERIFIED

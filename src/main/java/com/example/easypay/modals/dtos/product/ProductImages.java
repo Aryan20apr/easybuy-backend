@@ -1,5 +1,6 @@
 package com.example.easypay.modals.dtos.product;
 
+import com.example.easypay.modals.entities.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,6 +34,10 @@ public class ProductImages {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 
 

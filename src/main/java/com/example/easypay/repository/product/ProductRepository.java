@@ -55,6 +55,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
                     p.seller.companyName as companyName,
                     p.seller.sellerToken as sellerToken
                     
+                    
              from Product p  WHERE  p.count>0 AND p.category.id=?1
             """)
     public ProductProjection getProductsByCategory(Long id);
@@ -71,7 +72,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
                     p.countryOfOrigin as countryOfOrigin,
                     p.seller.companyName as companyName,
                     p.seller.sellerToken as sellerToken
-             from Product p  WHERE p.count>0 AND p.category.id=?1
+                    
+             from Product p WHERE p.count>0 AND p.category.id=?1
             """)
     public List<ProductProjection> findAllProduct(Long id);
 
